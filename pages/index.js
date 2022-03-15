@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Home({games}) {
+
   return (
       <div className={styles.container}>
         <Head>
@@ -16,10 +16,27 @@ export default function Home() {
             Welcome to <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Tutur.js!</a>
           </h1>
         </main>
+          <ul>
+              {games.map((game) => (
+                  <li key="{game.id}">{game.name}</li>
+              ))}
+          </ul>
 
         <footer className={styles.footer}>
           Powered by{' '}
         </footer>
       </div>
   )
+}
+
+export async function getStaticProps() {
+    const res = await fetch('http://localhost:8080/games')
+    const games = await res.json()
+    console.log(games)
+
+    return {
+        props: {
+            games,
+        },
+    }
 }
