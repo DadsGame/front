@@ -2,6 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import GameCard from "../components/GameCard";
 import Header from "../components/Header";
+import CardListSlider from "../components/CardListSlider";
 
 export default function Home({games}) {
 
@@ -22,11 +23,7 @@ export default function Home({games}) {
             Welcome to <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Tutur.js!</a>
           </h1>
         </main>
-          <div className={styles['card-list']}>
-              {games.map((game) => (
-                  <GameCard key={game.id} game={game}/>
-              ))}
-          </div>
+          <CardListSlider games={games}/>
           </body>
 
         <footer className={styles.footer}>
