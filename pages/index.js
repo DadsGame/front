@@ -17,14 +17,12 @@ export default function Home({games}) {
 
         </Header>
 
-          <body>
         <main className={styles.main}>
           <h1 className={styles.title}>
             Welcome to <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Tutur.js!</a>
           </h1>
         </main>
           <CardListSlider games={games}/>
-          </body>
 
         <footer className={styles.footer}>
           Powered by Us
