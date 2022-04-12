@@ -13,7 +13,21 @@ const CardListSlider = ({games}) => {
         <div>
             <div className={styles['default-title']}>Top games</div>
             <Swiper
-                slidesPerView={5}
+
+                breakpoints={{
+                    640: {
+                        width: 640,
+                        slidesPerView: 1,
+                    },
+                    1000: {
+                        width: 1000,
+                        slidesPerView: 3,
+                    },
+                    1500: {
+                        width: 1500,
+                        slidesPerView: 5,
+                    },
+                }}
                 spaceBetween={20}
                 modules={[Keyboard, Navigation]}
                 keyboard={{
@@ -25,7 +39,7 @@ const CardListSlider = ({games}) => {
                 {games.map((game) => {
                     console.log(game);
                     return(
-                        <SwiperSlide className={styles['swiper-slide']}>
+                        <SwiperSlide key={game.id} className={styles['swiper-slide']}>
                                 <GameCard key={game.id} game={game}/>
                         </SwiperSlide>
                     );
