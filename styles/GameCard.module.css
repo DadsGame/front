@@ -1,0 +1,68 @@
+.game-card {
+    width: min-content;
+    height: min-content;
+    position: relative;
+}
+
+.game-card-img {
+    display: block;
+    border-radius: 0.25em;
+}
+
+.game-card:hover {
+    background-color: #000;
+    border-radius: 0.25em;
+}
+
+.game-card:hover .game-card-img {
+    transition: opacity 0.5s;
+    opacity: 0.5;
+}
+
+.game-card:hover .game-card-title {
+    visibility: visible;
+}
+
+.game-card:hover .game-card-score {
+    visibility: visible;
+}
+
+
+.game-card-title {
+    position: absolute;
+    top: 0;
+    margin: 1em;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    visibility: hidden;
+    font-size: large;
+}
+
+.game-card-score {
+    position: absolute;
+    top: 100%;
+    transform: translate(10%, -100%);
+    margin-top: -0.5em;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    visibility: hidden;
+    font-size: xx-large;
+}
+
+.gold {
+    color: gold;
+}
+
+.silver {
+    color: silver;
+}
+
+.bronze {
+    color: #cd7f32;
+}
+
+.below {
+    color: #fff;
+}

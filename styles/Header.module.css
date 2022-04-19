@@ -1,0 +1,38 @@
+.logo {
+    width: min-content;
+}
+
+.navlinks {
+    display: flex;
+    gap: 1em;
+    align-self: center;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: max-content 1fr 1fr max-content;
+}
+
+.header-small {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr;
+    margin-bottom: 1em;
+}
+
+.search {
+    align-self: center;
+    justify-self: end;
+}
+
+.search-small {
+    grid-column: 1/3;
+}
+
+.profile {
+    align-self: center;
+}
+
+.menu {
+    align-self: center;
+}
