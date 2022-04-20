@@ -17,6 +17,7 @@
 .game-card:hover .game-card-img {
     transition: opacity 0.5s;
     opacity: 0.5;
+    cursor: pointer;
 }
 
 .game-card:hover .game-card-title {
@@ -31,7 +32,7 @@
 .game-card-title {
     position: absolute;
     top: 0;
-    margin: 1em;
+    margin: 0.25em;
     color: white;
     text-transform: uppercase;
     font-weight: bold;
@@ -65,4 +66,9 @@
 
 .below {
     color: #fff;
+}
+
+@keyframes bottomToVisible {
+    from {top: 120%;}
+    to { top: 100%;}
 }

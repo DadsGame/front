@@ -119,7 +119,7 @@ const Header = () => {
     function _renderLarge() {
         return(
             <div className={styles.header}>
-                <Image src={logo} alt="Dads Game logo" width={128} height={128}/>
+                <Image src={logo} alt="Dads Game logo" width={64} height={64}/>
                 <div className={styles.navlinks}>
                     <Link href="#" color="inherit" underline="hover">
                         Home

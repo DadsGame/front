@@ -19,7 +19,6 @@ export default function Home({games}) {
 export async function getStaticProps() {
     const res = await fetch('http://localhost:8000/api/igdb/topten')
     const games = await res.json()
-    console.log(games)
 
     return {
         props: {

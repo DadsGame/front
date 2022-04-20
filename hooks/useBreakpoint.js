@@ -24,10 +24,18 @@ const useBreakpoint = () => {
         handleResize();
 
         if (windowSize.width <= 550) {
-            setBreakPoint({breakPointName: breakpoints[550], slides: parseInt( windowSize.width / 280)});
+            setBreakPoint({
+                breakPointName: breakpoints[550],
+                slides: 2,
+                height: windowSize.height / 4,
+            });
         }
         if (windowSize.width >= 550 ) {
-            setBreakPoint({breakPointName: breakpoints[1920], slides: parseInt( windowSize.width / 280)});
+            setBreakPoint({
+                breakPointName: breakpoints[1920],
+                slides: Math.ceil(windowSize.width / (windowSize.height / 4)),
+                height: Math.ceil(windowSize.height / 4),
+            });
         }
 
         return () => window.removeEventListener('resize', handleResize);
