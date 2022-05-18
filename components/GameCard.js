@@ -3,13 +3,16 @@ import {React, useState} from "react";
 import styles from '../styles/GameCard.module.css';
 import {Backdrop, Box, Modal, Typography} from "@mui/material";
 import useBreakpoint from "../hooks/useBreakpoint.js";
+import {useRouter} from "next/router";
 
-const GameCard = ({cover, score, title, scoreColor = '#fff'}) => {
+const GameCard = ({cover, score, title, scoreColor = '#fff', id}) => {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const {breakPointName, width, height} = useBreakpoint();
+    const router = useRouter();
+    const idGame = id;
 
     // TODO: Put the formatter in i18n lib when dealing with translation
     const formatter = new Intl.NumberFormat('fr-FR', {style: 'percent',
@@ -18,9 +21,10 @@ const GameCard = ({cover, score, title, scoreColor = '#fff'}) => {
     return breakPointName === 'large' ? _renderBig() : _renderSmall();
 
     function _renderSmall() {
-        return (<div className={styles['game-card']}>
-            <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']} onClick={handleOpen} />
-            <div className="modal">
+        return (
+            <div className={styles['game-card']}>
+            <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']} onClick={() => router.push({pathname: '/detail', query: {gid: idGame}})} />
+            {/*<div className="modal">
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -49,6 +53,7 @@ const GameCard = ({cover, score, title, scoreColor = '#fff'}) => {
                     </Box>
                 </Modal>
             </div>
+            */}
         </div>
         );
     }
@@ -56,11 +61,12 @@ const GameCard = ({cover, score, title, scoreColor = '#fff'}) => {
     function _renderBig() {
         return(
             <div className={styles['game-card']}>
-                <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']} onClick={handleOpen} />
+                <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']} onClick={() => router.push({pathname: '/detail', query: {gid: idGame}})} />
                 <div style={{width}} className={styles['game-card-title']}>{title}</div>
                 <div style={{color: scoreColor}} className={`${styles['game-card-score']}`}>
                     {formatter.format(Math.ceil(score) / 100)}
                 </div>
+                {/*
                 <div className="modal">
                     <Modal
                         open={open}
@@ -89,6 +95,7 @@ const GameCard = ({cover, score, title, scoreColor = '#fff'}) => {
                         </Box>
                     </Modal>
                 </div>
+                */}
             </div>
         )
     }
