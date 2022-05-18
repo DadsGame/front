@@ -22,6 +22,7 @@ const TopCardsList = ({games}) => {
 
     return (
         <div className={styles['topten-card-container']}>
+            <div className={styles['title-categorie']}> Top 10 jeux récents </div>
             <Swiper
                 slidesPerView={slides}
                 modules={[Keyboard, Navigation]}
