@@ -40,6 +40,7 @@ const TopCardsList = ({games}) => {
                                     title={game.name}
                                     score={game.aggregated_rating}
                                     cover={game.cover}
+                                    id={game.id}
                                     scoreColor={TOP_COLORS[index+1] ?? TOP_COLORS.others}
                                 />
                             </SwiperSlide>
