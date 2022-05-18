@@ -1,6 +1,6 @@
 import {useRouter} from "next/router";
 
-export default function Detail() {
+export default function Details() {
     const router = useRouter()
     console.log(router.query)
     return (

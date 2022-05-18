@@ -34,7 +34,7 @@ const TopCardsList = ({games}) => {
             >
                     {games.map((game, index) => {
                         return (
-                            <SwiperSlide className={styles[`swiper-slide`]}>
+                            <SwiperSlide key={index} className={styles[`swiper-slide`]}>
                                 <GameCard
                                     className={styles.card}
                                     title={game.name}

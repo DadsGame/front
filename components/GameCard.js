@@ -23,7 +23,7 @@ const GameCard = ({cover, score, title, scoreColor = '#fff', id}) => {
     function _renderSmall() {
         return (
             <div className={styles['game-card']}>
-            <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']} onClick={() => router.push({pathname: '/detail', query: {gid: idGame}})} />
+            <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']} onClick={() => router.push({pathname: '/details', query: {gid: idGame}})} />
             {/*<div className="modal">
                 <Modal
                     open={open}
@@ -61,7 +61,7 @@ const GameCard = ({cover, score, title, scoreColor = '#fff', id}) => {
     function _renderBig() {
         return(
             <div className={styles['game-card']}>
-                <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']} onClick={() => router.push({pathname: '/detail', query: {gid: idGame}})} />
+                <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']} onClick={() => router.push({pathname: '/details', query: {gid: idGame}})} />
                 <div style={{width}} className={styles['game-card-title']}>{title}</div>
                 <div style={{color: scoreColor}} className={`${styles['game-card-score']}`}>
                     {formatter.format(Math.ceil(score) / 100)}
