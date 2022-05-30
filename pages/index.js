@@ -1,12 +1,15 @@
 import TopCardsList from "../components/TopCardsList.js";
 import Header from "../components/Header.js";
+import {parseCookies} from "../lib/parseCookies.js";
+import {withCookies} from "react-cookie";
+import SearchCard from "../components/SearchCard.js";
 
 
-export default function Home({games}) {
+ function Home({games, cookies}) {
 
     return (
         <div>
-            <Header/>
+            {cookies.get('user')}
             <div>
                 <TopCardsList games={games}/>
             </div>
@@ -24,4 +27,6 @@ export async function getStaticProps() {
         },
     }
 }
+
+export default withCookies(Home);
 

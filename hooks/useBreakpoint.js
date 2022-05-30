@@ -27,6 +27,7 @@ const useBreakpoint = () => {
             setBreakPoint({
                 breakPointName: breakpoints[550],
                 slides: 2,
+                width: Math.ceil(windowSize.height / 5),
                 height: windowSize.height / 4,
             });
         }
@@ -34,6 +35,7 @@ const useBreakpoint = () => {
             setBreakPoint({
                 breakPointName: breakpoints[1920],
                 slides: Math.ceil(windowSize.width / (windowSize.height / 4)),
+                width: Math.ceil(windowSize.height / 5),
                 height: Math.ceil(windowSize.height / 4),
             });
         }

@@ -50,6 +50,9 @@
     font-weight: bold;
     visibility: hidden;
     font-size: xx-large;
+    background-color: #000;
+    border-radius: 0.25em;
+    padding: 0.1em;
 }
 
 .gold {

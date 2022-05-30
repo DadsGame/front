@@ -29,6 +29,7 @@ const TopCardsList = ({games}) => {
                 keyboard={{
                     enabled: true,
                 }}
+                onFocusCapture={(e) => console.log(e)}
                 navigation={true}
                 className={styles.swiper}
             >
