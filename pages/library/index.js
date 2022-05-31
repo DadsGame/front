@@ -1,5 +1,6 @@
 import {withCookies} from "react-cookie";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+import ClippedDrawer from "../../components/ClippedDrawer";
 
 function Library({cookies}) {
     const [library, updateLibrary] = useState([])
@@ -21,15 +22,16 @@ function Library({cookies}) {
 
     return (
         <div>
-            {library.map((game, index) => {
+            {/*library.map((game, index) => {
                 console.log('game', game)
                 return (
                     <div key={index}> {game.idGame}</div>
                 )
-            })
+            })*/
             }
-            LIBRARY
+            <ClippedDrawer library={library}/>
         </div>
+
     )
 }
 
