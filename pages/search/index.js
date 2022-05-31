@@ -31,6 +31,8 @@ const Search = ({cookies}) => {
 
     }, [search]);
 
+    useEffect(() => {}, [games]);
+
 
     return (<div>
         search:
