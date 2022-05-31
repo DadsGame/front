@@ -1,6 +1,7 @@
 import AuthForm from "../../components/AuthForm.js";
 import {useEffect, useState} from "react";
 import {Alert, Snackbar} from "@mui/material";
+import {useRouter} from "next/router";
 
 export default function Register() {
 
@@ -8,6 +9,7 @@ export default function Register() {
     const setData = (data) => setFormData(data);
     const [open, setOpen] = useState(false);
     const [error, setError] = useState('');
+    const router = useRouter();
 
     const handleClick = () => {
         setOpen(true);
@@ -26,7 +28,7 @@ export default function Register() {
         if (Object.values(formData).length === 0) return;
         const registerTheUser = async () => {
             const registerUrl = new URL('/users/sign-up', process.env.NEXT_PUBLIC_MAIN_API_URL);
-            await fetch(registerUrl.toString(), {
+            const res = await fetch(registerUrl.toString(), {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -37,15 +39,15 @@ export default function Register() {
                     email: formData.email,
                     profilePicture: ''
                 }),
-            }) .then((res) => {
-               if(res.ok) return;
-               return res.json();
-            })
-                .then((res) => {
+            }).then((res) => {
                     setOpen(true);
-                    if (res?.error) setError(res.message);
-
+                    if (res?.error) {
+                        setError(res.message);
+                        return {error: true};
+                    }
+                    return {error: false}
                 });
+            if(!res.error) return await router.push('/login');
         };
         registerTheUser();
 
