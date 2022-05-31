@@ -263,7 +263,7 @@ const Header = ({cookies}) => {
                     }}>
                         <GamesIcon /> My Library
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem onClick={ () => router.push({url: '/library', query: {isStat: true}})}>
                         <EqualizerIcon/> Stats
                     </MenuItem>
                     <Divider/>

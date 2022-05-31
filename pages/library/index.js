@@ -1,8 +1,10 @@
 import {withCookies} from "react-cookie";
 import React, {useEffect, useState} from "react";
 import ClippedDrawer from "../../components/ClippedDrawer";
+import {useRouter} from "next/router";
 
 function Library({cookies}) {
+    const router = useRouter();
     const [library, updateLibrary] = useState([])
     const token = cookies.get('user') ?? '';
     useEffect(() => {
@@ -19,6 +21,9 @@ function Library({cookies}) {
 
         fetchLibrary()
     }, [])
+    useEffect( () => {
+        updateLibrary(library)
+    }, [router.asPath])
 
     return (
         <div>
