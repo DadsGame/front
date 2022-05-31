@@ -178,9 +178,6 @@ const Header = ({cookies}) => {
                         Home
                     </Link>
                     <Link href="#" color="inherit" underline="hover">
-                        Library
-                    </Link>
-                    <Link href="#" color="inherit" underline="hover">
                         Stats
                     </Link>
                 </div>

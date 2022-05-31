@@ -1,0 +1,35 @@
+.container {
+    background: linear-gradient(to right top, #071931 0%, #33274f 50%, #661e43 100%);
+    padding: 2em;
+    border-radius: 20px;
+}
+
+.details-container {
+    display: flex;
+}
+
+.game-detail-img {
+    border-radius: 0.25em;
+}
+
+.game-detail-score {
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: xx-large;
+    border-radius: 0.25em;
+    padding-top: 1em;
+}
+
+.game-detail-title {
+    font-size: 2em;
+}
+
+.game-detail-summary {
+    padding-top: 1em;
+    font-weight: bold;
+}
+
+.game-detail-storyline {
+    padding-top: 1em;
+}

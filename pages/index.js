@@ -18,7 +18,7 @@ import SearchCard from "../components/SearchCard.js";
 }
 
 export async function getStaticProps() {
-    const res = await fetch('http://localhost:8000/api/igdb/topten')
+    const res = await fetch(new URL ('api/igdb/topten', process.env.NEXT_PUBLIC_BTB_API_URL))
     const games = await res.json()
 
     return {
