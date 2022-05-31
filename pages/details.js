@@ -1,17 +1,15 @@
+import {React} from 'react';
 import {useRouter} from "next/router";
+import GameDetail from "../components/GameDetail";
 
 export default function Details({games}) {
     const router = useRouter()
     const game = games[0] ?? {}
     console.log(router.query)
     return (
-        <div>
-            <div>Page de détail du jeu {router.query.gid}</div>
-            <div>{JSON.stringify(games)}</div>
-            <div>{JSON.stringify(game.aggregated_rating)}</div>
-            <div>{JSON.stringify(game.name)}</div>
-            <div>{JSON.stringify(game.summary)}</div>
-        </div>
+            <div>
+                <GameDetail game={game} />
+            </div>
     )
 }
 
