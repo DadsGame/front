@@ -257,8 +257,11 @@ const Header = ({cookies}) => {
                     <MenuItem>
                         <PersonIcon/> Profile
                     </MenuItem>
-                    <MenuItem>
-                        <GamesIcon/> My Library
+                    <MenuItem onClick={() => {
+                        console.log('library')
+                        return router.push('/library')
+                    }}>
+                        <GamesIcon /> My Library
                     </MenuItem>
                     <MenuItem>
                         <EqualizerIcon/> Stats
