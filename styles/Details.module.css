@@ -31,6 +31,11 @@
     font-size: 2em;
     padding-left: 1em;
 }
+.game-detail-subtitle {
+    font-size: 1.5em;
+    padding-left: 1.5em;
+    padding-top: 1em;
+}
 
 .game-detail-summary {
     padding-top: 1em;
@@ -39,4 +44,8 @@
 
 .game-detail-storyline {
     padding-top: 1em;
+}
+
+.clipped-text {
+    color: white;
 }

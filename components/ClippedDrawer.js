@@ -1,48 +1,54 @@
 import * as React from "react";
-import PropTypes from "prop-types";
-import AppBar from "@mui/material/AppBar";
+import {useState} from "react";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
-import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import {useState} from "react";
 import useBreakpoint from "../hooks/useBreakpoint";
+import GenericCard from "./GenericCard";
+import styles from "../styles/Details.module.css";
 
 const drawerWidth = 240;
 
 function ClippedDrawer({library}) {
     const [mobileOpen, setMobileOpen] = useState(false);
     const {breakPointName} = useBreakpoint()
-    const [content, setContent] = useState("no content")
+    const [active, setActive] = useState(-1)
+    const [gameContent, setGameContent] = useState()
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    function setContainerData(game) {
+    async function setContainerData(game) {
         console.log(game)
-        setContent(game.playtime)
+        if (game.id_game != -1 && game.igdb_id != null){
+            const url = new URL ('/api/igdb/games/byId', process.env.NEXT_PUBLIC_BTB_API_URL)
+            url.searchParams.set('id', game.igdb_id)
+            const res = await fetch(url.toString())
+            const gameContent = await res.json()
+            setGameContent(gameContent)
+            console.log(gameContent)
+        }
+        setActive(game.id_game)
     }
 
     const drawer = (
-        <div>
+        <div className={styles[`clipped-text`]}>
             <Divider />
             <List>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemText primary="My stats" onClick={() => setContainerData({id_game: -1}) }/>
+                    </ListItemButton>
+                </ListItem>
                 {library.map((game) => (
                     <ListItem key={game.idGame} disablePadding>
                         <ListItemButton>
-                            <ListItemText primary={game.idGame} onClick={() => setContainerData(game) }/>
+                            <ListItemText primary={game.name} onClick={() => setContainerData(game) }/>
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -50,11 +56,8 @@ function ClippedDrawer({library}) {
         </div>
     );
 
-    const container =
-        window !== undefined ? () => window().document.body : undefined;
-
     return (
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex"}}>
             <Box
                 component="nav"
                 sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -69,7 +72,9 @@ function ClippedDrawer({library}) {
                             "& .MuiDrawer-paper": {
                                 boxSizing: "border-box",
                                 width: drawerWidth,
-                                marginTop: '5em'
+                                marginTop: '5em',
+                                backgroundColor: "#2E3033",
+                                borderRadius: '20px',
                             }
                         }}
                         open
@@ -86,7 +91,45 @@ function ClippedDrawer({library}) {
                     width: { sm: `calc(100% - ${drawerWidth}px)` }
                 }}
             >
-                {content}
+                <GenericCard>
+                    <div>
+                        {active === -1 && <div> My stats </div>}
+                    </div>
+                        {library.map((game) => (
+                            <div>
+                                {active === game.id_game && <div>
+                                    <div className={styles[`details-container-${breakPointName}`]}>
+                                        <div className={styles[`details-image-container`]}>
+                                            <img className={styles['game-detail-img']} src={gameContent[0].cover}/>
+                                        </div>
+
+
+                                        <div className={styles['game-detail-title']}>
+                                            {JSON.stringify(gameContent[0].name).replaceAll('"', '')}
+                                        </div>
+                                        <div className={styles['game-detail-subtitle']}>
+                                            {JSON.stringify(game.playtime)} h
+                                            <div>
+                                                Bought at: {JSON.stringify(game.bought_at)} €
+                                            </div>
+                                            { game.sold_at > 0 &&
+                                            <div>
+                                                Sold at: {JSON.stringify(game.bought_at)} €
+                                            </div>
+                                            }
+                                        </div>
+
+
+
+                                    </div>
+                                    <div className={styles['game-detail-summary']}>
+                                        {JSON.stringify(gameContent[0].summary).replaceAll('"', '')}
+                                    </div>
+                                </div>}
+                            </div>
+                        ))}
+                </GenericCard>
+
             </Box>
         </Box>
     );
