@@ -12,6 +12,7 @@ import GenericCard from "./GenericCard";
 import styles from "../styles/Details.module.css";
 import AddCommentForm from "./AddCommentForm";
 import UserReview from "./UserReview";
+import {Chip} from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -119,6 +120,10 @@ function ClippedDrawer({library}) {
                                                 Sold at: {JSON.stringify(game.sold_at)} €
                                             </div>
                                             }
+                                            <div>
+                                                Status:
+                                                <Chip sx={{color: 'white'}} variant="filled" label={game.status}> </Chip>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className={styles['game-detail-summary']}>
