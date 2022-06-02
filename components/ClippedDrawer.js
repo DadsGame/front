@@ -10,6 +10,8 @@ import ListItemText from "@mui/material/ListItemText";
 import useBreakpoint from "../hooks/useBreakpoint";
 import GenericCard from "./GenericCard";
 import styles from "../styles/Details.module.css";
+import AddCommentForm from "./AddCommentForm";
+import UserReview from "./UserReview";
 
 const drawerWidth = 240;
 
@@ -114,13 +116,10 @@ function ClippedDrawer({library}) {
                                             </div>
                                             { game.sold_at > 0 &&
                                             <div>
-                                                Sold at: {JSON.stringify(game.bought_at)} €
+                                                Sold at: {JSON.stringify(game.sold_at)} €
                                             </div>
                                             }
                                         </div>
-
-
-
                                     </div>
                                     <div className={styles['game-detail-summary']}>
                                         {JSON.stringify(gameContent[0].summary).replaceAll('"', '')}
@@ -129,6 +128,28 @@ function ClippedDrawer({library}) {
                             </div>
                         ))}
                 </GenericCard>
+
+                    {library.map((game) => (
+                        <div>
+                            { active === game.id_game && <GenericCard>
+                            <div>
+                                <AddCommentForm gameId={game.id_game} userId={game.id_user}/>
+                            </div>
+                            </GenericCard>
+                                }
+                        </div>
+                    ))}
+                {library.map((game) => (
+                    <div>
+                        { active === game.id_game && <GenericCard>
+                            <div>
+                                <UserReview gameId={game.id_game}/>
+                            </div>
+                        </GenericCard>
+                        }
+                    </div>
+                ))}
+
 
             </Box>
         </Box>

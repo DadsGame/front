@@ -1,0 +1,38 @@
+.comment-form-rate span {
+    color: white;
+}
+
+.comment-form-input {
+    background-color: transparent;
+    border-style: hidden;
+    color: white;
+}
+
+.comment-form-input:focus {
+    outline: none;
+}
+
+.comment-form-button {
+    margin-left: 1em;
+    background-color: #2E3033;
+    color: white;
+    border-style: hidden;
+    font-size: 1em;
+    padding: 0.5em;
+    border-radius: 10px;
+    transition-duration: 0.4s;
+}
+
+.comment-form-button:hover {
+    cursor: pointer;
+    background-color: white;
+    color: #2E3033;
+}
+
+.review-username {
+    font-weight: bold;
+}
+
+.review {
+    margin-bottom: 1em;
+}
