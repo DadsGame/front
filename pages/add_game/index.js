@@ -52,9 +52,10 @@ const addGameToApi = async (formData, token) => {
 
 const postGamelocalToLibrary = async (formData, token) => {
     const postGameUrl = new URL('/games/toLibrary', process.env.NEXT_PUBLIC_MAIN_API_URL);
-    const alreadyExists = (await checkIfGameAlreadyExistsLocal(formData.name, token)).alreadyExists;
+    const alreadyExists = (await checkIfGameAlreadyExistsLocal(formData.name, token));
+    const alreadyExistBool = alreadyExists.alreadyExists;
     let game = {};
-    if(!alreadyExists) {
+    if(!alreadyExistBool) {
         game = await addGameToApi(formData, token);
     }
     const res = await fetch(postGameUrl.toString(), {
@@ -63,16 +64,18 @@ const postGamelocalToLibrary = async (formData, token) => {
                 'Authorization': `Bearer ${token}`
             },
             method: 'POST',
-            body: JSON.stringify({...formData, idGame: game.id}),
+            body: JSON.stringify({...formData, idGame: game?.id??alreadyExists.id}),
     });
     return await res.json();
 }
 
 const postGameToLibrary = async (formData, gameId, token) => {
     const postGameUrl = new URL('/games/toLibrary', process.env.NEXT_PUBLIC_MAIN_API_URL);
-    const alreadyExists = (await checkIfGameAlreadyExists(gameId, token)).alreadyExists;
+    const alreadyExists = (await checkIfGameAlreadyExists(gameId, token));
+    const alreadyExistBool = alreadyExists.alreadyExists;
+    console.log('exists', alreadyExists, gameId, formData)
     let game = {};
-    if(!alreadyExists) {
+    if(!alreadyExistBool) {
         game = await addGameToApi({...formData, igdbId: gameId}, token);
     }
     const res = await fetch(postGameUrl.toString(), {
@@ -81,7 +84,7 @@ const postGameToLibrary = async (formData, gameId, token) => {
             'Authorization': `Bearer ${token}`
         },
         method: 'POST',
-        body: JSON.stringify({...formData, idGame: game.id}),
+        body: JSON.stringify({...formData, idGame: game?.id??alreadyExists.id}),
     });
     return await res.json();
 }
