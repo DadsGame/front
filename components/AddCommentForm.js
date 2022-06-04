@@ -66,7 +66,7 @@ const AddGameForm = ({gameId, setFormData,userId, cookies}) => {
                     style={{ width: 500 }}
                     onChange={(e) => setComment(e.target.value)}
                 />
-                <button type="submit" className={styles['comment-form-button']}>Send review</button>
+                <button type="submit" color="primary" className={styles['comment-form-button']}>Send review</button>
             </form>
 
     )

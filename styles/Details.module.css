@@ -49,3 +49,35 @@
 .clipped-text {
     color: white;
 }
+.select {
+    color: white;
+}
+
+.input {
+    backdrop-filter: blur(15px);
+}
+
+.editButtons {
+    margin-left: 1em;
+    background-color: #1976d2;
+    color: white;
+    border-style: hidden;
+    font-size: 1em;
+    padding: 0.5em;
+    border-radius: 10px;
+    transition-duration: 0.4s;
+}
+
+.editButtons:hover:enabled {
+    cursor: pointer;
+    background-color: white;
+    color: #2E3033;
+}
+
+.editButtons:disabled {
+    background-color: #2E3033;
+}
+
+.editButtons:disabled:hover {
+
+}
