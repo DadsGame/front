@@ -20,6 +20,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import GamesIcon from '@mui/icons-material/Games';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import {useRouter} from "next/router";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // TODO: Maybe move these styled inputs into a separate file/lib
 const Search = styled('div')(({theme}) => ({
@@ -174,10 +175,16 @@ const Header = ({cookies}) => {
                     onClick={() => router.push('/')}
                 />
                 <div className={styles.navlinks}>
-                    <Link href="/" color="inherit" underline="hover">
+                    {router.asPath !== '/'
+                        ? <IconButton aria-label="go back" onClick={() => router.back()} sx={{color: 'white'}}>
+                            <ArrowBackIcon />
+                        </IconButton>
+                        : ''
+                    }
+                    <Link href="/" color="inherit" underline="hover" sx={{alignSelf: 'center'}}>
                         Home
                     </Link>
-                    <Link href="#" color="inherit" underline="hover">
+                    <Link href="/stats" color="inherit" underline="hover" sx={{alignSelf: 'center'}}>
                         Stats
                     </Link>
                 </div>

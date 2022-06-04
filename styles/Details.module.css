@@ -1,3 +1,10 @@
+.cards {
+    display: grid;
+    gap: 1em;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
 .details-container {
     display: flex;
 }
@@ -26,4 +33,26 @@
 
 .game-detail-storyline {
     padding-top: 1em;
+}
+
+.forum-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.forum-header-title {
+    align-self: center;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.forum-header-btns {
+    display: flex;
+    gap: 0.5em;
+}
+
+.forum-latest-post-title {
+    font-size: large;
+    margin: 1em 0 1em 0;
+    text-decoration: underline;
 }
