@@ -5,12 +5,23 @@
     grid-template-rows: 1fr;
 }
 
-.details-container {
+.details-container-large {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-template-rows: max-content 1fr;
+}
+
+.details-container-sml {
     display: flex;
+    flex-direction: column;
 }
 
 .game-detail-img {
     border-radius: 0.25em;
+}
+
+.details-image-container {
+    grid-row: 1/3;
 }
 
 .game-detail-score {
@@ -20,10 +31,17 @@
     font-size: xx-large;
     border-radius: 0.25em;
     padding-top: 1em;
+    padding-left: 1em;
 }
 
 .game-detail-title {
     font-size: 2em;
+    padding-left: 1em;
+}
+.game-detail-subtitle {
+    font-size: 1.5em;
+    padding-left: 1.5em;
+    padding-top: 1em;
 }
 
 .game-detail-summary {
@@ -55,4 +73,8 @@
     font-size: large;
     margin: 1em 0 1em 0;
     text-decoration: underline;
+}
+
+.clipped-text {
+    color: white;
 }

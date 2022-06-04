@@ -264,10 +264,13 @@ const Header = ({cookies}) => {
                     <MenuItem>
                         <PersonIcon/> Profile
                     </MenuItem>
-                    <MenuItem>
-                        <GamesIcon/> My Library
+                    <MenuItem onClick={() => {
+                        console.log('library')
+                        return router.push('/library')
+                    }}>
+                        <GamesIcon /> My Library
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem onClick={ () => router.push({url: '/library', query: {isStat: true}})}>
                         <EqualizerIcon/> Stats
                     </MenuItem>
                     <Divider/>

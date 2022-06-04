@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import {React, useEffect, useState} from "react";
 import {useForm, Controller} from "react-hook-form";
+import {useRouter} from "next/router";
 
 
 const AddGameForm = ({isUpdate = false, setFormData, gameName, fromSearch}) => {
@@ -21,6 +22,7 @@ const AddGameForm = ({isUpdate = false, setFormData, gameName, fromSearch}) => {
     const [gameNameError, setGameNameError] = useState('');
     const [hasSoldGame, setHasSoldGame] = useState('false');
     const [name, setGameName] = useState('');
+    const router = useRouter();
     const onSubmit = (data) => {
         if(data.name === '' && gameName === '') {
             return setGameNameError('This input is required.');
@@ -34,6 +36,7 @@ const AddGameForm = ({isUpdate = false, setFormData, gameName, fromSearch}) => {
             status
         });
         else setFormData({...data, name: (data.name === '' )? gameName : data.name,  status});
+        router.push('/')
     };
 
     const handleChangeStatus = (event) => {
