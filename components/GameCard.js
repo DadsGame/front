@@ -13,7 +13,7 @@ const GameCard = ({cover, score, title, scoreColor = '#fff', id}) => {
     const skeleton = (cover == null || score == null || id == null);
 
     // TODO: Put the formatter in i18n lib when dealing with translation
-    const formatter = new Intl.NumberFormat('fr-FR', {
+    const formatter = new Intl.NumberFormat('en-US', {
         style: 'percent',
         maximumFractionDigits: 0
     });

@@ -19,6 +19,7 @@ const AddGameForm = ({isUpdate = false, setFormData, gameName, fromSearch}) => {
 
     const {register, handleSubmit, formState: {errors}, getValues, control} = useForm({criteriaMode: "all"});
     const [status, setStatus] = useState('not started');
+    const [platform, setPlatform] = useState('Other');
     const [gameNameError, setGameNameError] = useState('');
     const [hasSoldGame, setHasSoldGame] = useState('false');
     const [name, setGameName] = useState('');
@@ -33,10 +34,10 @@ const AddGameForm = ({isUpdate = false, setFormData, gameName, fromSearch}) => {
             boughtAt: data.boughtAt,
             name: (data.name === '' )? gameName : data.name,
             playtime: data.playtime,
-            status
+            status,
+            platform
         });
-        else setFormData({...data, name: (data.name === '' )? gameName : data.name,  status});
-        router.push('/')
+        else setFormData({...data, name: (data.name === '' )? gameName : data.name,  status, platform});
     };
 
     const handleChangeStatus = (event) => {
@@ -49,6 +50,9 @@ const AddGameForm = ({isUpdate = false, setFormData, gameName, fromSearch}) => {
         if(name !== '') setGameNameError('');
         setGameName(event.target.value);
     };
+    const handlePlatformChange = (event) => {
+        setPlatform(event.target.value);
+    };
 
     useEffect(() => {}, [name]);
     useEffect(() => {
@@ -60,6 +64,7 @@ const AddGameForm = ({isUpdate = false, setFormData, gameName, fromSearch}) => {
     return (
         <div className={styles.container}>
             <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+            <h2 className={styles['form-title']}>Add a game to your library</h2>
                 <TextField
                     error={gameNameError !== ''}
                     helperText={gameNameError}
@@ -68,7 +73,7 @@ const AddGameForm = ({isUpdate = false, setFormData, gameName, fromSearch}) => {
                     {...register('name', )}>Game Name
                 </TextField>
                 <FormControl>
-                    <InputLabel id="game-statuslabel">Game Status</InputLabel>
+                    <InputLabel id="game-status-label">Game Status</InputLabel>
                     <Select
                         labelId="game-status-label"
                         id="demo-simple-select"
@@ -80,6 +85,24 @@ const AddGameForm = ({isUpdate = false, setFormData, gameName, fromSearch}) => {
                         <MenuItem value="started">started</MenuItem>
                         <MenuItem value="finished">finished</MenuItem>
                         <MenuItem value="won't continue">won&apos;t continue</MenuItem>
+                    </Select>
+                </FormControl>
+                <FormControl>
+                    <InputLabel id="game-platform">Platform</InputLabel>
+                    <Select
+                        labelId="game-platform"
+                        id="game-platform-select"
+                        value={platform}
+                        label="Platform"
+                        onChange={handlePlatformChange}
+                    >
+                        <MenuItem value="PC">PC</MenuItem>
+                        <MenuItem value="PS3">PS3</MenuItem>
+                        <MenuItem value="PS4">PS4</MenuItem>
+                        <MenuItem value="Xbox One">Xbox One</MenuItem>
+                        <MenuItem value="Xbox Series S/X">Xbox Series S/X</MenuItem>
+                        <MenuItem value="Nintendo Switch">Nintendo Switch</MenuItem>
+                        <MenuItem value="Other">Other</MenuItem>
                     </Select>
                 </FormControl>
                 <TextField {...register('playtime', {required: "This input is required."})} className={styles.input}

@@ -7,11 +7,24 @@
 
 .details-container-large {
     display: grid;
-    grid-template-columns: max-content 1fr;
-    grid-template-rows: max-content 1fr;
+    grid-template-columns: max-content max-content 1fr;
+    grid-template-rows: max-content max-content max-content;
+    gap: 1em;
 }
 
 .details-container-sml {
+    display: flex;
+    flex-direction: column;
+}
+
+.details-container-lib-large {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-template-rows: repeat(4, max-content);
+    gap: 1em;
+}
+
+.details-container-lib-sml {
     display: flex;
     flex-direction: column;
 }
@@ -21,36 +34,41 @@
 }
 
 .details-image-container {
-    grid-row: 1/3;
+    grid-row: 1/4;
+}
+.details-image-lib-container {
+    grid-row: 1/5;
 }
 
 .game-detail-score {
     color: white;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: xx-large;
-    border-radius: 0.25em;
-    padding-top: 1em;
-    padding-left: 1em;
+    font-size: x-large;
+    font-style: italic;
+}
+.game-detail-genre {
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: x-large;
+    font-style: italic;
 }
 
 .game-detail-title {
     font-size: 2em;
-    padding-left: 1em;
 }
 .game-detail-subtitle {
     font-size: 1.5em;
-    padding-left: 1.5em;
-    padding-top: 1em;
 }
 
 .game-detail-summary {
-    padding-top: 1em;
+    margin-top: 1em;
     font-weight: bold;
 }
 
 .game-detail-storyline {
-    padding-top: 1em;
+    margin-top: 1em;
 }
 
 .forum-header {
@@ -77,4 +95,14 @@
 
 .clipped-text {
     color: white;
+}
+
+.generic-card-sml {
+    width: 80vw;
+}
+
+.game-detail-add-lib {
+    grid-column: 3/4;
+    grid-row: 1/4;
+    justify-self: end;
 }

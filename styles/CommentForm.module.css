@@ -1,15 +1,20 @@
 .comment-form-rate span {
     color: white;
+    width: min-content;
 }
 
-.comment-form-input {
-    background-color: transparent;
-    border-style: hidden;
+.comment-form-input textarea {
     color: white;
 }
 
-.comment-form-input:focus {
-    outline: none;
+.comment-form-input label {
+    color: white;
+}
+
+.comment-form-title, .reviews-title {
+    font-weight: bold;
+    font-size: x-large;
+    margin-bottom: 1em;
 }
 
 .comment-form-button {

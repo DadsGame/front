@@ -9,6 +9,10 @@ import useBreakpoint from "../hooks/useBreakpoint";
 const GameDetail = ({game, latestsPosts}) => {
     const router = useRouter();
     const {breakPointName} = useBreakpoint()
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'percent',
+        maximumFractionDigits: 0
+    });
 
     return (
         <div className={styles.cards}>
@@ -22,8 +26,20 @@ const GameDetail = ({game, latestsPosts}) => {
                                 {JSON.stringify(game.name).replaceAll('"', '')}
                             </div>
                             <div className={styles['game-detail-score']}>
-                                {JSON.stringify(game.aggregated_rating)}%
+                                {game.aggregated_rating != null
+                                    ? <span>score: {formatter.format(game.aggregated_rating / 100)}</span>
+                                    : <span> No rating found.</span>
+                                }
                             </div>
+                        <div className={styles['game-detail-genre']}>
+                            genres:
+                            <ul>
+                            {game.genres.map((genre) => (<li>{genre.name}</li>))}
+                            </ul>
+                        </div>
+                        <div className={styles['game-detail-add-lib']}>
+                           <Button variant="contained" onClick={() => router.push(`/add_game?game_name=${game.name.replace('&', '%26')}&fromSearch=true&gameId=${game.id}`)}>Add to Library</Button>
+                        </div>
 
 
                     </div>

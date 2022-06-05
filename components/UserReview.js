@@ -24,6 +24,7 @@ const UserReview = ({gameId, cookies}) => {
 
     return (
         <div>
+            <div className={styles["reviews-title"]}>Reviews</div>
             { reviews.length > 0 ?
             reviews.map((r) => (
                 <div className={styles['review']}>

@@ -4,6 +4,7 @@ import Rating from "@mui/material/Rating";
 import styles from "../styles/CommentForm.module.css";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import {useRouter} from "next/router";
+import {Button, TextField} from "@mui/material";
 
 const AddGameForm = ({gameId, setFormData,userId, cookies}) => {
     const router = useRouter();
@@ -51,6 +52,7 @@ const AddGameForm = ({gameId, setFormData,userId, cookies}) => {
 
             <form onSubmit={handleSubmit}>
                 <div>
+                    <div className={styles["comment-form-title"]}>Add a review</div>
                 <Rating className={styles['comment-form-rate']}
                     name="simple-controlled"
                     value={value}
@@ -59,14 +61,19 @@ const AddGameForm = ({gameId, setFormData,userId, cookies}) => {
                     }}
                 />
                 </div>
-                <TextareaAutosize className={styles['comment-form-input']}
-                    aria-label="minimum height"
-                    minRows={3}
-                    placeholder="comment"
-                    style={{ width: 500 }}
+                <TextField
+                    variant="outlined"
+                    sx={{backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: '0.25em'}}
+                    multiline
+                    rows={4}
+                    aria-label="comment"
+                    label="comment"
+                    className={styles['comment-form-input']}
                     onChange={(e) => setComment(e.target.value)}
                 />
-                <button type="submit" className={styles['comment-form-button']}>Send review</button>
+                <br />
+                <br />
+                <Button type="submit" variant="contained" sx={{marginLeft: '1em'}}>Send review</Button>
             </form>
 
     )

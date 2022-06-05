@@ -74,7 +74,7 @@ const SearchCard = ({game, cookies}) => {
                     )
                     : ''
                 }
-                <Link size="small" color="primary">
+                <Link href={`/details?gid=${game.id}`}size="small" color="primary">
                     More Infos
                 </Link>
             </CardActions>

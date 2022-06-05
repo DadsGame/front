@@ -87,7 +87,7 @@ const AddPost = ({cookies}) => {
     }, [formData]);
 
 
-    if(token == null) {
+    if(token == null || token === '') {
         return '';
     }
 

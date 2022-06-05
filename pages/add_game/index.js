@@ -4,6 +4,7 @@ import {withCookies} from "react-cookie";
 import AddGameForm from "../../components/AddGameForm.js";
 import SearchCard from "../../components/SearchCard.js";
 import {route} from "next/dist/server/router.js";
+import {Alert, Snackbar} from "@mui/material";
 
 const checkGameShouldBeLocal = async (gameName, gameId) => {
     const gameMatchUrl = new URL('/api/igdb/games/shouldBeLocal', process.env.NEXT_PUBLIC_BTB_API_URL);
@@ -33,7 +34,19 @@ const checkIfGameAlreadyExists = async (igdbId, token) => {
         headers: {'Authorization': `Bearer ${token}`}
     });
     const json = await res.json();
+    console.log('jsonexists', json)
     return {alreadyExists: Object.values(json).length !== 0, id: json.id};
+}
+
+const checkIfGameIsInLibrary = async (token, gameId)  => {
+    const postGameUrl = new URL(`/games/userLibrary/isPresent/${gameId}`, process.env.NEXT_PUBLIC_MAIN_API_URL);
+    const res = await fetch(postGameUrl.toString(), {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    return await res.json();
 }
 
 const addGameToApi = async (formData, token) => {
@@ -57,6 +70,9 @@ const postGamelocalToLibrary = async (formData, token) => {
     let game = {};
     if(!alreadyExistBool) {
         game = await addGameToApi(formData, token);
+    } else {
+        const isGameInLibrary = await checkIfGameIsInLibrary(token, alreadyExists.id);
+        if(isGameInLibrary[0].count > 0) return {error: 'game is already in library'};
     }
     const res = await fetch(postGameUrl.toString(), {
             headers: {
@@ -77,6 +93,9 @@ const postGameToLibrary = async (formData, gameId, token) => {
     let game = {};
     if(!alreadyExistBool) {
         game = await addGameToApi({...formData, igdbId: gameId}, token);
+    } else {
+        const isGameInLibrary = await checkIfGameIsInLibrary(token, alreadyExists.id);
+        if(isGameInLibrary[0].count > 0) return {error: 'game is already in library'};
     }
     const res = await fetch(postGameUrl.toString(), {
         headers: {
@@ -101,6 +120,19 @@ const AddGame = ({cookies}) => {
     const [fromSearch, setFromSearch] = useState(false);
     const routerQuery = router.query;
     console.log(gameName);
+    const [open, setOpen] = useState(false);
+    const [error, setError] = useState('');
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     useEffect(() => {
         const redirectIfNeeded = async () => {
@@ -123,8 +155,16 @@ const AddGame = ({cookies}) => {
         const addGame = async () => {
             const shouldBeLocal = await checkGameShouldBeLocal(formData.name, gameId);
             console.log(shouldBeLocal);
-            if (shouldBeLocal) await postGamelocalToLibrary(formData, token);
-            else await postGameToLibrary(formData, gameId, token);
+            const {error}  = (shouldBeLocal)
+                ? await postGamelocalToLibrary(formData, token)
+                : await postGameToLibrary(formData, gameId, token);
+            setOpen(true);
+            if(error) {
+                setError(error);
+            } else {
+                setError('');
+                await router.push('/library');
+            }
         }
         addGame();
 
@@ -133,7 +173,21 @@ const AddGame = ({cookies}) => {
 
     if (token != null && token !== '') {
         return (
+            <>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                { error !== '' ?
+                <Alert onClose={handleClose} severity="error" sx={{width: '100%'}}>
+                    {error}
+                </Alert>
+                    :  <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
+                        Game added successfully to library
+                    </Alert>
+                }
+
+
+            </Snackbar>
             <AddGameForm gameName={gameName} fromSearch={fromSearch} setFormData={setFormData}/>
+            </>
         );
     }
 

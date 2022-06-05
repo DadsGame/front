@@ -8,7 +8,7 @@ import {Box} from "@mui/material";
 const Search = ({cookies}) => {
 
     const router = useRouter();
-    const search = useDebounce(router.query.search, 1500);
+    const search = useDebounce(router.query.search, 1000);
     const [games, setGames] = useState(Array(20).fill(<SearchCard />));
 
     useEffect(() => setGames(Array(10).fill(<SearchCard />)), []);
