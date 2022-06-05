@@ -16,6 +16,7 @@ import {Alert, Button, Chip, Link} from "@mui/material";
 import {useRouter} from "next/router";
 import {withCookies} from "react-cookie";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents.js";
+import ModifyGameLibrary from "./ModifyGameLibrary";
 
 
 const drawerWidth = 200;
@@ -43,6 +44,14 @@ function ClippedDrawer({library, token}) {
         setUserStats(stats[0])
         console.log('stats', stats)
     }
+    const [isEdited, setEdit] = useState(false)
+    const [localGame, setGame] = useState()
+
+    const childToParent = (childDataEdit, gameChanged) => {
+        console.log('gc', gameChanged)
+        setEdit(childDataEdit)
+        setGame(gameChanged)
+    }
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -52,7 +61,102 @@ function ClippedDrawer({library, token}) {
         fetchUserStats();
     }, []);
 
+    function onEdit(game) {
+        setEdit(true)
+        console.log(game)
+    }
+
+    function renderIsEdited(game){
+        return (
+            <ModifyGameLibrary childToParent={childToParent} game={localGame} gameContent={gameContent} breakPointName={breakPointName} />
+        )
+
+    }
+
+    function renderNotEdited(game) {
+        return (
+            <div>
+                {active === game.id_game ? <div>
+                    <div className={styles[`details-container-${breakPointName}`]}>
+                        <div className={styles[`details-image-lib-container`]}>
+                            {game.igdb_id != null
+                                ? <img className={styles['game-detail-img']} src={gameContent[0].cover}/>
+                                : ''}
+                        </div>
+
+
+                        <div className={styles['game-detail-title']}>
+                            {
+                                game.igdb_id != null
+                                    ? gameContent[0].name
+                                    : <span>{game.name} (local game)</span>
+
+                            }
+                        </div>
+                        <div className={styles['game-detail-subtitle']}>
+                            {game.playtime} h
+                            <div>
+                                Bought at: {formatterCurrency.format(game.bought_at)}
+                            </div>
+                            {game.sold_at > 0 &&
+                                <div>
+                                    Sold at: {formatterCurrency.format(game.sold_at)}
+                                </div>
+                            }
+                            <div style={{display: "flex", gap: "0.25em"}}>
+                                <span>Status: </span>
+                                <Chip sx={{color: 'white', alignSelf: 'end', backgroundColor: '#424242'}}
+                                      size="small" variant="filled" label={game.status}/>
+                            </div>
+                            <div>
+                                Platform: {game.platform}
+                            </div>
+                        </div>
+                        {
+                            (game.igdb_id != null)
+                                ? <div className={styles['game-detail-score']}>
+                                    {gameContent[0].aggregated_rating != null
+                                        ?
+                                        <span>score: {formatterPercent.format(gameContent[0].aggregated_rating / 100)}</span>
+                                        : <span> No rating found.</span>
+                                    }
+                                </div>
+                                : ''
+                        }
+                        {(game.igdb_id != null)
+                            ? <div className={styles['game-detail-genre']}>
+                                {gameContent[0].genres != null
+                                    ? (
+                                        <>
+                                            genres:
+                                            <ul>
+                                                {gameContent[0].genres.map((genre) => (
+                                                    <li>{genre.name}</li>))}
+                                            </ul>
+                                        </>)
+                                    : ''
+                                }
+                            </div>
+                            : ''
+                        }
+                        <div className={styles['game-detail-add-lib']}>
+                            <Button variant="contained" onClick={() => onEdit(game)}>Edit</Button>
+                        </div>
+                    </div>
+                    <div className={styles['game-detail-summary']}>
+                        {
+                            game.igdb_id != null
+                                ? gameContent[0].summary
+                                : ''
+                        }
+                    </div>
+                </div> : ''}
+            </div>
+        )
+    }
+
     async function setContainerData(game) {
+        setGame(game)
         console.log(game)
         if (game.id_game !== -1 && game.igdb_id != null) {
             const url = new URL('/api/igdb/games/byId', process.env.NEXT_PUBLIC_BTB_API_URL)
@@ -161,78 +265,14 @@ function ClippedDrawer({library, token}) {
                         }
                     {library.map((game) => (
                         <div>
-                            {active === game.id_game ? <div>
-                                <div className={styles[`details-container-lib-${breakPointName}`]}>
-                                    <div className={styles[`details-image-lib-container`]}>
-                                        {game.igdb_id != null
-                                            ? <img className={styles['game-detail-img']} src={gameContent[0].cover}/>
-                                            : ''}
-                                    </div>
+                            {active === game.id_game && <div>
+                                {
+                                    isEdited
+                                        ? renderIsEdited(game)
+                                        : renderNotEdited(game)
 
-
-                                    <div className={styles['game-detail-title']}>
-                                        {
-                                            game.igdb_id != null
-                                                ? gameContent[0].name
-                                                : <span>{game.name} (local game)</span>
-
-                                        }
-                                    </div>
-                                    <div className={styles['game-detail-subtitle']}>
-                                        {game.playtime} h
-                                        <div>
-                                            Bought at: {formatterCurrency.format(game.bought_at)}
-                                        </div>
-                                        {game.sold_at > 0 &&
-                                            <div>
-                                                Sold at: {formatterCurrency.format(game.sold_at)}
-                                            </div>
-                                        }
-                                        <div style={{display: "flex", gap: "0.25em"}}>
-                                            <span>Status: </span>
-                                            <Chip sx={{color: 'white', alignSelf: 'end', backgroundColor: '#424242'}}
-                                                  size="small" variant="filled" label={game.status}/>
-                                        </div>
-                                        <div>
-                                            Platform: {game.platform}
-                                        </div>
-                                    </div>
-                                    {
-                                        (game.igdb_id != null)
-                                            ? <div className={styles['game-detail-score']}>
-                                                {gameContent[0].aggregated_rating != null
-                                                    ?
-                                                    <span>score: {formatterPercent.format(gameContent[0].aggregated_rating / 100)}</span>
-                                                    : <span> No rating found.</span>
-                                                }
-                                            </div>
-                                            : ''
-                                    }
-                                    {(game.igdb_id != null)
-                                        ? <div className={styles['game-detail-genre']}>
-                                            {gameContent[0].genres != null
-                                                ? (
-                                                    <>
-                                                        genres:
-                                                        <ul>
-                                                            {gameContent[0].genres.map((genre) => (
-                                                                <li>{genre.name}</li>))}
-                                                        </ul>
-                                                    </>)
-                                                : ''
-                                            }
-                                        </div>
-                                        : ''
-                                    }
-                                </div>
-                                <div className={styles['game-detail-summary']}>
-                                    {
-                                        game.igdb_id != null
-                                            ? gameContent[0].summary
-                                            : ''
-                                    }
-                                </div>
-                            </div> : ''}
+                                }
+                            </div>}
                         </div>
                     ))}
                 </GenericCard>
