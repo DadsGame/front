@@ -8,7 +8,6 @@ function Home({games, games2, cookies}) {
 
     return (
         <div>
-            {cookies.get('user')}
             <div>
                 <TopCardsList games={games} titleCat={titleCat1}/>
                 <TopCardsList games={games2} titleCat={titleCat2}/>
