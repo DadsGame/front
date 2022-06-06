@@ -41,13 +41,6 @@ const Stats = ({stats}) => {
                 <span style={{fontSize: 'large', fontStyle: 'italic'}}>
                     {stat.most_present_status}</span>
             </GenericCard>
-            <GenericCard>
-                <h2>Average spent by users</h2>
-                <span style={{color: 'red', fontSize: 'large'}}>{currencyFormatter.format(stat.avg_spent)}</span>
-            </GenericCard>  <GenericCard>
-                <h2>Average revenue by users</h2>
-                <span style={{color: 'green', fontSize: 'large'}}>{currencyFormatter.format(stat.avg_revenue)}</span>
-            </GenericCard>
         </div>
         </>
     );

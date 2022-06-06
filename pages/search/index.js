@@ -38,7 +38,10 @@ const Search = ({cookies}) => {
         search:
         {search}
         <div className={styles.games}>
-            {games}
+            {games.length === 0
+                ? <div>no games found</div>
+                : games
+            }
         </div>
 
     </div>);

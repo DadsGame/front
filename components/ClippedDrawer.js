@@ -17,6 +17,8 @@ import {useRouter} from "next/router";
 import {withCookies} from "react-cookie";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents.js";
 import ModifyGameLibrary from "./ModifyGameLibrary";
+import {act} from "react-dom/test-utils";
+import {router} from "next/client.js";
 
 
 const drawerWidth = 200;
@@ -175,6 +177,9 @@ function ClippedDrawer({library, token}) {
         <div className={styles[`clipped-text`]}>
             <Divider/>
             <List>
+                <ListItem disablePadding sx={{justifyContent: 'center'}}>
+                    <Button variant="contained" onClick={() => router.push('/add_game')}>Add a game</Button>
+                </ListItem>
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemText primary="My stats" onClick={() => setContainerData({id_game: -1})}/>
@@ -226,8 +231,8 @@ function ClippedDrawer({library, token}) {
                     width: {sm: `calc(100% - ${drawerWidth}px)`}
                 }}
             >
-                <GenericCard className={styles[`generic-card-${breakPointName}`]} style={active === -1 ? {background: 'none'} : {}}>
-                        {active === -1 && userStats != null
+                <GenericCard className={styles[`generic-card-${breakPointName}`]} style={active === -1 && userStats != null ? {background: 'none'} : {}}>
+                    {active === -1 && userStats != null
                             ? (
                                 <>
                                         <h1>My stats</h1>
@@ -263,6 +268,14 @@ function ClippedDrawer({library, token}) {
                             )
                             : ''
                         }
+                    {active === -1 && userStats == null
+                        ? ( <>
+                            <h1>My stats</h1>
+                            <p>You don&apos;t have any stats yet. <br /> Try to add some games to your library.</p>
+                            </>
+                        )
+                        : ''
+                    }
                     {library.map((game) => (
                         <div>
                             {active === game.id_game && <div>

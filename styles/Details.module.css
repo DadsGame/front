@@ -95,6 +95,8 @@
 
 .forum-header-btns {
     display: flex;
+    width: max-content;
+    margin-left: 0.25em;
     gap: 0.5em;
 }
 

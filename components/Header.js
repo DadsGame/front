@@ -261,7 +261,7 @@ const Header = ({cookies}) => {
         if (token) {
             return (
                 <div>
-                    <MenuItem>
+                    <MenuItem onClick={() => router.push('/profile')}>
                         <PersonIcon/> Profile
                     </MenuItem>
                     <MenuItem onClick={() => {
@@ -269,9 +269,6 @@ const Header = ({cookies}) => {
                         return router.push('/library')
                     }}>
                         <GamesIcon /> My Library
-                    </MenuItem>
-                    <MenuItem onClick={ () => router.push({url: '/library', query: {isStat: true}})}>
-                        <EqualizerIcon/> Stats
                     </MenuItem>
                     <Divider/>
                     <MenuItem onClick={() => {

@@ -6,7 +6,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import {useRouter} from "next/router";
 import {Button, TextField} from "@mui/material";
 
-const AddGameForm = ({gameId, setFormData,userId, cookies}) => {
+const AddCommentForm = ({gameId, setFormData,userId, cookies}) => {
     const router = useRouter();
     const token = cookies.get('user');
     const [comment, setComment] = useState("");
@@ -81,4 +81,4 @@ const AddGameForm = ({gameId, setFormData,userId, cookies}) => {
 }
 
 
-export default withCookies(AddGameForm);
+export default withCookies(AddCommentForm);
