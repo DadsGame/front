@@ -1,5 +1,5 @@
-.logo {
-    width: min-content;
+.logo:hover {
+    cursor: pointer;
 }
 
 .navlinks {

@@ -21,6 +21,7 @@ import GamesIcon from '@mui/icons-material/Games';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import {useRouter} from "next/router";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import HomeIcon from '@mui/icons-material/Home';
 
 // TODO: Maybe move these styled inputs into a separate file/lib
 const Search = styled('div')(({theme}) => ({
@@ -120,8 +121,8 @@ const Header = ({cookies}) => {
     function _renderSmall() {
         return (
             <div className={styles['header-small']}>
-                <div className="logo">
-                    <Image src={logo} alt="Dads Game logo" width={64} height={64}/>
+                <div>
+                    <Image className={styles.logo} onClick={() => router.push('/')} src={logo} alt="Dads Game logo" width={64} height={64}/>
                 </div>
                 <div className={styles.menu}>
                     <Button
@@ -142,9 +143,21 @@ const Header = ({cookies}) => {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>My account</MenuItem>
-                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                        {
+                            token == null || token === ''
+                            ? ( <div>
+                                    <MenuItem onClick={() => router.push('/login')}>
+                                    <Login fontSize="small" />Login
+                                </MenuItem>
+                                <MenuItem onClick={() => router.push('/register')}><PersonAdd fontSize="small" />Register</MenuItem></div>)
+                            : (<div><MenuItem onClick={() => router.push('/profile')}>Profile</MenuItem>
+                            <MenuItem onClick={() => router.push('/library')}>Library</MenuItem>
+                            <MenuItem onClick={() => {
+                                cookies.remove('user');
+                                return router.push('/');
+                            }}>Logout</MenuItem></div>)
+                        }
+
                     </Menu>
                 </div>
                 <div className={styles['search-small']}>
@@ -172,6 +185,7 @@ const Header = ({cookies}) => {
                     alt="Dads Game logo"
                     width={64}
                     height={64}
+                    className={styles.logo}
                     onClick={() => router.push('/')}
                 />
                 <div className={styles.navlinks}>

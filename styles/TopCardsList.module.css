@@ -4,11 +4,20 @@
     align-items: center;
 }
 
-.title-categorie {
-    font-size: 20px;
+.title-category {
+    font-size: x-large;
     font-weight: bold;
+    margin: 0 0 1em 0.5em;
 }
 
 .topten-card-container {
     margin-bottom: 2em;
+}
+
+.not-enough-data {
+    margin-left: 1em;
+    background-color: #fff;
+    border-radius: 0.25em;
+    color: black;
+    padding: 0.5em;
 }

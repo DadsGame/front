@@ -8,8 +8,8 @@ import {Box} from "@mui/material";
 const Search = ({cookies}) => {
 
     const router = useRouter();
-    const search = useDebounce(router.query.search, 1000);
-    const [games, setGames] = useState(Array(20).fill(<SearchCard />));
+    const search = useDebounce(router.query.search, 500);
+    const [games, setGames] = useState([]);
 
     useEffect(() => setGames(Array(10).fill(<SearchCard />)), []);
 
@@ -25,6 +25,7 @@ const Search = ({cookies}) => {
                 console.log(game);
                 return (<SearchCard game={{id: game.id, name: game.name, description: game.summary, image: game.cover}}/>);
             });
+
             setGames(searchCardGames);
         }
         searchGame();
@@ -35,8 +36,9 @@ const Search = ({cookies}) => {
 
 
     return (<div>
-        search:
-        {search}
+        <div className={styles['search-title-container']}>
+        <span className={styles['search-title']}>Search: </span> {search}
+        </div>
         <div className={styles.games}>
             {games.length === 0
                 ? <div>no games found</div>

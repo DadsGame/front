@@ -12,10 +12,11 @@ import GenericCard from "./GenericCard";
 import styles from "../styles/Details.module.css";
 import AddCommentForm from "./AddCommentForm";
 import UserReview from "./UserReview";
-import {Button, Chip, Link} from "@mui/material";
+import {Button, Chip, IconButton, Link} from "@mui/material";
 import ModifyGameLibrary from "./ModifyGameLibrary";
 import {act} from "react-dom/test-utils";
-import {router} from "next/client.js";
+import MenuIcon from '@mui/icons-material/Menu';
+import {useRouter} from "next/router";
 
 
 const drawerWidth = 200;
@@ -26,6 +27,7 @@ function ClippedDrawer({library, token}) {
     const [active, setActive] = useState(-1)
     const [gameContent, setGameContent] = useState()
     const [userStats, setUserStats] = useState()
+    const router = useRouter();
     const formatterPercent = new Intl.NumberFormat('en-US', {
         style: 'percent',
         maximumFractionDigits: 0
@@ -79,7 +81,7 @@ function ClippedDrawer({library, token}) {
         return (
             <div>
                 {active === game.id_game ? <div>
-                    <div className={styles[`details-container-${breakPointName}`]}>
+                    <div className={styles[`details-container-lib-${breakPointName}`]}>
                         <div className={styles[`details-image-lib-container`]}>
                             {game.igdb_id != null
                                 ? <img className={styles['game-detail-img']} src={gameContent[0].cover}/>
@@ -94,9 +96,12 @@ function ClippedDrawer({library, token}) {
                                     : <span>{game.name} (local game)</span>
 
                             }
+                            <div className={styles['game-detail-add-lib']}>
+                                <Button variant="contained" onClick={() => onEdit(game)}>Edit</Button>
+                            </div>
                         </div>
                         <div className={styles['game-detail-subtitle']}>
-                            {localGame.playtime} h
+                            {localGame.playtime}h
                             <div>
                                 Bought at: {formatterCurrency.format(localGame.bought_at)}
                             </div>
@@ -141,9 +146,7 @@ function ClippedDrawer({library, token}) {
                             </div>
                             : ''
                         }
-                        <div className={styles['game-detail-add-lib']}>
-                            <Button variant="contained" onClick={() => onEdit(game)}>Edit</Button>
-                        </div>
+
                     </div>
                     <div className={styles['game-detail-summary']}>
                         {
@@ -185,6 +188,7 @@ function ClippedDrawer({library, token}) {
                         <ListItemText primary="My stats" onClick={() => setContainerData({id_game: -1})}/>
                     </ListItemButton>
                 </ListItem>
+                <Divider sx={{backgroundColor: '#bdbdbd'}} />
                 {library.map((game) => (
                     <ListItem key={game.idGame} disablePadding>
                         <ListItemButton>
@@ -203,9 +207,11 @@ function ClippedDrawer({library, token}) {
                 sx={{width: {sm: drawerWidth}, flexShrink: {sm: 0}}}
                 aria-label="mailbox folders"
             >
+
+
                 {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-                {breakPointName === "large" ?
-                    <Drawer
+                {breakPointName === 'large'
+                    ? (<Drawer
                         variant="permanent"
                         sx={{
                             display: {},
@@ -220,9 +226,27 @@ function ClippedDrawer({library, token}) {
                         open
                     >
                         {drawer}
+                    </Drawer>)
+                    :   <Drawer
+                        variant="temporary"
+                        open={mobileOpen}
+                        onClose={handleDrawerToggle}
+                        ModalProps={{
+                            keepMounted: true // Better open performance on mobile.
+                        }}
+                        sx={{
+                            display: { xs: "block", sm: "none" },
+                            "& .MuiDrawer-paper": {
+                                boxSizing: "border-box",
+                                width: drawerWidth,
+                                backgroundColor: "#2E3033",
+                            }
+                        }}
+                    >
+                        {drawer}
                     </Drawer>
-                    : ""
                 }
+
 
             </Box>
             <Box
@@ -231,6 +255,17 @@ function ClippedDrawer({library, token}) {
                     width: {sm: `calc(100% - ${drawerWidth}px)`}
                 }}
             >
+                {breakPointName !== 'large'
+                    ? (<IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerToggle}
+                        sx={{ ml: 1}}
+                    >
+                        <MenuIcon />
+                    </IconButton>)
+                    : ''
+                }
                 <GenericCard className={styles[`generic-card-${breakPointName}`]}
                              style={active === -1 && userStats != null ? {background: 'none'} : {}}>
                     {active === -1 && userStats != null

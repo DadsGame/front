@@ -22,7 +22,6 @@ const TopCardsList = ({games, titleCat}) => {
 
     return (
         <div className={styles['topten-card-container']}>
-            <div className={styles['title-categorie']}> {titleCat} </div>
             <Swiper
                 slidesPerView={slides}
                 modules={[Keyboard, Navigation]}

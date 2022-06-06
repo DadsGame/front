@@ -1,5 +1,7 @@
 import TopCardsList from "../components/TopCardsList.js";
 import {withCookies} from "react-cookie";
+import styles from "../styles/TopCardsList.module.css";
+import {React} from "react";
 
 
 function Home({games, games2, cookies}) {
@@ -9,8 +11,14 @@ function Home({games, games2, cookies}) {
     return (
         <div>
             <div>
-                <TopCardsList games={games} titleCat={titleCat1}/>
-                <TopCardsList games={games2} titleCat={titleCat2}/>
+                <div className={styles['title-category']}> {titleCat1} </div>
+                <TopCardsList games={games} />
+                <div className={styles['title-category']}> {titleCat2} </div>
+                {
+                    (games2 == null || games2.length === 0)
+                        ? <span className={styles['not-enough-data']}>Not enough data to show this category.</span>
+                        :  <TopCardsList games={games2} />
+                }
             </div>
         </div>
     )

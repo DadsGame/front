@@ -47,20 +47,20 @@ const ModifyGameLibrary = ({childToParent, cookies, game, gameContent, breakPoin
                     soldAt: soldAt,
                     status: status,
                 }),
-            }).then((res) => {
-                console.log('open')
-                setOpen(true);
-                if (!res.ok ) {
-                    console.log('not ok',res)
-                    setError('Edit failed');
-                    return res.json();
-                } else {
-                    console.log('ok',res)
-                    setError('');
-                }
+            });
+
+            setOpen(true);
+
+            if(!res.ok) {
+                console.log('not ok',res)
+                setError('Edit failed');
+                return;
+            }
+
+            setError('');
+            setTimeout(() => {
                 childToParent(false, {playtime: hours, bought_at: boughAt, sold_at: soldAt, status, id_game: game.id_game, id_user:game.id_user, idgb_id: game.igdb_id, name: game.name})
-                return {error: false}
-            })
+            }, 1000);
 
     }
 
@@ -80,7 +80,10 @@ const ModifyGameLibrary = ({childToParent, cookies, game, gameContent, breakPoin
                     {JSON.stringify(gameContent[0].name).replaceAll('"', '')}
                 </div>
                 <div className={styles['game-detail-subtitle']}>
-                    <input type="number" placeholder={game.playtime} onChange={(e) => setPlaytime(e.target.value)}/> h
+                    <div>
+                        <span>Playtime: </span>
+                        <input type="number" placeholder={game.playtime} onChange={(e) => setPlaytime(e.target.value)}/>h
+                    </div>
                     <div>
                         Bought at: <input className={styles.input} type="number" placeholder={game.bought_at} onChange={(e) => setPrice(e.target.value)}/> €
                     </div>
@@ -100,10 +103,13 @@ const ModifyGameLibrary = ({childToParent, cookies, game, gameContent, breakPoin
                         <MenuItem value="finished">finished</MenuItem>
                         <MenuItem value="won't continue">won&apos;t continue</MenuItem>
                     </Select>
+                    <br />
+                    <div className={styles.editButtonsContainer}>
+                <button className={styles.editButtons} type="submit" disabled={hasChanged()}>Save</button>
+                <button className={styles.editButtons} onClick={() => childToParent(false, game)}>Cancel</button>
+                    </div>
                 </div>
             </div>
-        <button className={styles.editButtons} type="submit" disabled={hasChanged()}>Save</button>
-                <button className={styles.editButtons} onClick={() => childToParent(false, game)}>Cancel</button>
             </form>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 {(error !== '')

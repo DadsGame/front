@@ -50,7 +50,7 @@ const SearchCard = ({game, cookies}) => {
     }
 
     return (
-        <Card sx={{maxWidth: 345, display: 'grid', gridTemplateRows: 'min-content max-content 1fr', gridTemplateColumns: '1fr'}}>
+        <Card sx={{display: 'grid', gridTemplateRows: 'min-content max-content 1fr', gridTemplateColumns: '1fr', gap: '1em'}}>
                     <CardMedia
                         component="img"
                         height="120"

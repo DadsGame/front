@@ -163,7 +163,7 @@ const AddGame = ({cookies}) => {
                 setError(error);
             } else {
                 setError('');
-                await router.push('/library');
+                setTimeout(() => router.push('/library'), 1500);
             }
         }
         addGame();
