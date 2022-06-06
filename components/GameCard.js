@@ -56,7 +56,7 @@ const GameCard = ({cover, score, title, scoreColor = '#fff', id, isIgdb, igdb_id
                             isIgdb
                                 ? <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']}
                                        onClick={() => goToDetails()}/>
-                                : <img src={CoverNotFound} alt="" style={{width, height}} className={styles['game-card-img']}
+                                : <img src={CoverNotFound.src} alt="" width={width} height={height} className={styles['game-card-img']}
                                        onClick={() => goToDetails()}/>
                         }
                     </div>
