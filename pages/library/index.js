@@ -10,7 +10,6 @@ function Library({cookies}) {
     const [library, updateLibrary] = useState([])
     const token = cookies.get('user') ?? '';
     async function fetchLibrary() {
-        console.log(token)
         const url = new URL('/games/userLibrary', process.env.NEXT_PUBLIC_MAIN_API_URL)
         const res = await fetch(url, {
             headers: {'Authorization': `Bearer ${token}`}
@@ -23,8 +22,6 @@ function Library({cookies}) {
             const posts = await resPosts.json()
             return {...response, latestsPosts: posts};
         }));
-
-        console.log(response)
         updateLibrary(response)
     }
     useEffect(() => {
@@ -37,13 +34,6 @@ function Library({cookies}) {
 
     return (
         <div>
-            {/*library.map((game, index) => {
-                console.log('game', game)
-                return (
-                    <div key={index}> {game.idGame}</div>
-                )
-            })*/
-            }
             <ClippedDrawer library={library} token={token}/>
         </div>
 
