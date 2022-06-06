@@ -7,7 +7,7 @@
 .title-category {
     font-size: x-large;
     font-weight: bold;
-    margin: 0 0 1em 0.5em;
+    margin: 1em 0 1em 1em;
 }
 
 .topten-card-container {
@@ -15,7 +15,7 @@
 }
 
 .not-enough-data {
-    margin-left: 1em;
+    margin-left: 2em;
     background-color: #fff;
     border-radius: 0.25em;
     color: black;
