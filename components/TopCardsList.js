@@ -16,13 +16,13 @@ const TOP_COLORS = {
     others: '#fff',
 }
 
-const TopCardsList = ({games}) => {
+const TopCardsList = ({games, titleCat}) => {
 
     const {breakPointName, slides} = useBreakpoint();
 
     return (
         <div className={styles['topten-card-container']}>
-            <div className={styles['title-categorie']}> Top 10 jeux récents </div>
+            <div className={styles['title-categorie']}> {titleCat} </div>
             <Swiper
                 slidesPerView={slides}
                 modules={[Keyboard, Navigation]}
@@ -40,9 +40,11 @@ const TopCardsList = ({games}) => {
                                     className={styles.card}
                                     title={game.name}
                                     score={game.aggregated_rating}
+                                    scoreColor={TOP_COLORS[index+1] ?? TOP_COLORS.others}
                                     cover={game.cover}
                                     id={game.id}
-                                    scoreColor={TOP_COLORS[index+1] ?? TOP_COLORS.others}
+                                    igdb_id={game.igdb_id}
+                                    isIgdb={!!game.isIgdb || !!game.igdb_id}
                                 />
                             </SwiperSlide>
                         );

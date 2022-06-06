@@ -24,11 +24,11 @@ export default function Details({games, posts}) {
 }
 
 export async function getServerSideProps(context) {
-    console.log(context)
-    const url = new URL ('/api/igdb/games/byId', process.env.NEXT_PUBLIC_BTB_API_URL)
-    url.searchParams.set('id', context.query.gid)
-    const res = await fetch(url.toString())
-    const games = await res.json()
+    let games
+        const url = new URL ('/api/igdb/games/byId', process.env.NEXT_PUBLIC_BTB_API_URL)
+        url.searchParams.set('id', context.query.gid)
+        const res = await fetch(url.toString())
+        games = await res.json()
 
     const postsUrl =  new URL (`/posts/byGameTopic/filtered/${context.query.gid}`, process.env.NEXT_PUBLIC_MAIN_API_URL);
     const resPosts = await fetch(postsUrl.toString())

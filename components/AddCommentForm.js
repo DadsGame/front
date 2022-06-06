@@ -4,21 +4,34 @@ import Rating from "@mui/material/Rating";
 import styles from "../styles/CommentForm.module.css";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import {useRouter} from "next/router";
-import {Button, TextField} from "@mui/material";
+import {Alert, Button, Snackbar, TextField} from "@mui/material";
+import GenericCard from "./GenericCard";
 
-const AddCommentForm = ({gameId, setFormData,userId, cookies}) => {
+const AddCommentForm = ({gameId, setFormData, userId, cookies}) => {
     const router = useRouter();
     const token = cookies.get('user');
     const [comment, setComment] = useState("");
+    const [open, setOpen] = useState(false);
     const [value, setValue] = useState(0);
     const [error, setError] = useState('');
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     let handleSubmit = async (e) => {
         e.preventDefault()
         try {
             console.log('send data ', {comment}, {value})
             const commentUrl = new URL('/games/addReview', process.env.NEXT_PUBLIC_MAIN_API_URL);
-            let res = await fetch(commentUrl , {
+            let res = await fetch(commentUrl, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -31,17 +44,18 @@ const AddCommentForm = ({gameId, setFormData,userId, cookies}) => {
                     review: comment,
                 }),
             }).then((res) => {
-                if (!res.ok ) return;
+                if (!res.ok) return;
                 return res.json();
             })
                 .then((res) => {
+                    setOpen(true)
                     if (res == null || Object.values(res).length === 0) {
                         console.log('error ')
                         setError("invalid review");
                     } else {
                         setError('');
                     }
-            })
+                })
         } catch (err) {
             console.log(err)
         }
@@ -49,17 +63,17 @@ const AddCommentForm = ({gameId, setFormData,userId, cookies}) => {
     }
 
     return (
-
+        <div>
             <form onSubmit={handleSubmit}>
                 <div>
                     <div className={styles["comment-form-title"]}>Add a review</div>
-                <Rating className={styles['comment-form-rate']}
-                    name="simple-controlled"
-                    value={value}
-                    onChange={(event, newValue) => {
-                        setValue(newValue);
-                    }}
-                />
+                    <Rating className={styles['comment-form-rate']}
+                            name="simple-controlled"
+                            value={value}
+                            onChange={(event, newValue) => {
+                                setValue(newValue);
+                            }}
+                    />
                 </div>
                 <TextField
                     variant="outlined"
@@ -71,11 +85,22 @@ const AddCommentForm = ({gameId, setFormData,userId, cookies}) => {
                     className={styles['comment-form-input']}
                     onChange={(e) => setComment(e.target.value)}
                 />
-                <br />
-                <br />
+                <br/>
+                <br/>
                 <Button type="submit" variant="contained" sx={{marginLeft: '1em'}}>Send review</Button>
             </form>
 
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                {error !== '' ?
+                    <Alert onClose={handleClose} severity="error" sx={{width: '100%'}}>
+                        {error}
+                    </Alert>
+                    : <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
+                        Review successfully added
+                    </Alert>
+                }
+            </Snackbar>
+        </div>
     )
 
 }

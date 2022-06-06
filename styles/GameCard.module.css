@@ -40,6 +40,27 @@
     font-size: large;
 }
 
+.game-card-title-local {
+    position: absolute;
+    top: 0;
+    margin: 0.25em;
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: large;
+}
+
+.title {
+    position: absolute;
+    top: 0;
+    margin: 0.25em;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    visibility: hidden;
+    font-size: large;
+}
+
 .game-card-score {
     position: absolute;
     top: 100%;
