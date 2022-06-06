@@ -1,16 +1,31 @@
 import {React, useState} from "react";
 
 import styles from '../styles/GameCard.module.css';
-import {Backdrop, Box, Modal, Skeleton, Typography} from "@mui/material";
 import useBreakpoint from "../hooks/useBreakpoint.js";
 import {useRouter} from "next/router";
+import CoverNotFound from "../public/images/cover_not_found_2.png";
+import {Alert, Snackbar} from "@mui/material";
+import Image from "next";
 
-const GameCard = ({cover, score, title, scoreColor = '#fff', id}) => {
+const GameCard = ({cover, score, title, scoreColor = '#fff', id, isIgdb, igdb_id}) => {
 
     const {breakPointName, width, height} = useBreakpoint();
     const router = useRouter();
     const idGame = id;
     const skeleton = (cover == null || score == null || id == null);
+    const [open, setOpen] = useState(false);
+    const [error, setError] = useState('');
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     // TODO: Put the formatter in i18n lib when dealing with translation
     const formatter = new Intl.NumberFormat('en-US', {
@@ -18,49 +33,84 @@ const GameCard = ({cover, score, title, scoreColor = '#fff', id}) => {
         maximumFractionDigits: 0
     });
 
+    function goToDetails(){
+        if (isIgdb) {
+            if (igdb_id != null) {
+                return router.push({pathname: '/details', query: {gid: igdb_id}});
+            } else {
+                return router.push({pathname: '/details', query: {gid: idGame}});
+            }
+        }
+        setOpen(true)
+        setError('No Detail page')
+    }
+
     return breakPointName === 'large' ? _renderBig() : _renderSmall();
 
     function _renderSmall() {
-        return skeleton
-            ? (
+        return (
+            <div>
                 <div className={styles['game-card']}>
                     <div className="img-container">
-                    <Skeleton className={styles['game-card-img']} variant="rectangular" width={240} height={height} animation="wave"
-                              sx={{bgcolor: 'grey.700'}}/>
-
-                    </div>
-                </div>)
-            : (
-                <div className={styles['game-card']}>
-                    <div className="img-container">
-                        <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']}
-                         onClick={() => router.push({pathname: '/details', query: {gid: idGame}})}/>
+                        {
+                            isIgdb
+                                ? <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']}
+                                       onClick={() => goToDetails()}/>
+                                : <img src={CoverNotFound} alt="" style={{width, height}} className={styles['game-card-img']}
+                                       onClick={() => goToDetails()}/>
+                        }
                     </div>
                 </div>
-            );
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    {error !== '' ?
+                        <Alert onClose={handleClose} severity="error" sx={{width: '100%'}}>
+                            {error}
+                        </Alert>
+                        : <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
+                            Review successfully added
+                        </Alert>
+                    }
+                </Snackbar>
+            </div>
+            )
     }
 
     function _renderBig() {
-        return skeleton
-            ? (
+        console.log('img', JSON.stringify(CoverNotFound))
+        return (
+            <div>
                 <div className={styles['game-card']}>
                     <div className="img-container">
-                        <Skeleton variant="rectangular" width={240} height={height} animation="wave"
-                                  sx={{bgcolor: 'grey.700'}}/>
+                        {
+                            isIgdb
+                            ? <div>
+                                <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']}
+                                   onClick={() => goToDetails()}/>
+                                    {
+                                        !!score
+                                        ?<div style={{color: scoreColor}} className={`${styles['game-card-score']}`}>
+                                                {formatter.format(Math.ceil(score) / 100)}
+                                            </div>
+                                            : <div></div>
+                                    }
+                                </div>
+
+                            : <img src={CoverNotFound.src} alt="" width={width} height={height} className={styles['game-card-img']}
+                                   onClick={() => goToDetails()}/>
+                        }
+
                     </div>
+                    <div style={{width}} className={styles[`game-card-title${!isIgdb?'-local':''}`]}>{title}</div>
                 </div>
-            )
-            : (
-                <div className={styles['game-card']}>
-                    <div className="img-container">
-                        <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']}
-                             onClick={() => router.push({pathname: '/details', query: {gid: idGame}})}/>
-                    </div>
-                    <div style={{width}} className={styles['game-card-title']}>{title}</div>
-                    <div style={{color: scoreColor}} className={`${styles['game-card-score']}`}>
-                        {formatter.format(Math.ceil(score) / 100)}
-                    </div>
-                </div>
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    {error !== '' ?
+                        <Alert onClose={handleClose} severity="error" sx={{width: '100%'}}>
+                            {error}
+                        </Alert>
+                        : <div></div>
+                    }
+                </Snackbar>
+            </div>
             )
     }
 

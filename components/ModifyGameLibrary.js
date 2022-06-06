@@ -32,7 +32,7 @@ const ModifyGameLibrary = ({childToParent, cookies, game, gameContent, breakPoin
 
     let handleSubmit = async (e) => {
         e.preventDefault()
-        try {
+
             const updateGameLibUrl = new URL('/games/toLibrary', process.env.NEXT_PUBLIC_MAIN_API_URL);
             let res = await fetch(updateGameLibUrl , {
                 method: 'POST',
@@ -48,20 +48,19 @@ const ModifyGameLibrary = ({childToParent, cookies, game, gameContent, breakPoin
                     status: status,
                 }),
             }).then((res) => {
+                console.log('open')
                 setOpen(true);
                 if (!res.ok ) {
-                    console.log('error', error)
-                    setError(res.message);
-                    return {error: true};
+                    console.log('not ok',res)
+                    setError('Edit failed');
+                    return res.json();
+                } else {
+                    console.log('ok',res)
+                    setError('');
                 }
-                console.log('no error', error)
                 childToParent(false, {playtime: hours, bought_at: boughAt, sold_at: soldAt, status, id_game: game.id_game, id_user:game.id_user, idgb_id: game.igdb_id, name: game.name})
                 return {error: false}
             })
-        } catch (err){
-            setError(err.message);
-         console.log(err)
-        }
 
     }
 
@@ -112,7 +111,7 @@ const ModifyGameLibrary = ({childToParent, cookies, game, gameContent, breakPoin
                         {error}
                     </Alert>
                     : <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
-                        Saved!
+                        Saved !
                     </Alert>
                 }
             </Snackbar>

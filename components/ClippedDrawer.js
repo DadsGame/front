@@ -12,10 +12,7 @@ import GenericCard from "./GenericCard";
 import styles from "../styles/Details.module.css";
 import AddCommentForm from "./AddCommentForm";
 import UserReview from "./UserReview";
-import {Alert, Button, Chip, Link} from "@mui/material";
-import {useRouter} from "next/router";
-import {withCookies} from "react-cookie";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents.js";
+import {Button, Chip, Link} from "@mui/material";
 import ModifyGameLibrary from "./ModifyGameLibrary";
 
 
@@ -44,6 +41,7 @@ function ClippedDrawer({library, token}) {
         setUserStats(stats[0])
         console.log('stats', stats)
     }
+
     const [isEdited, setEdit] = useState(false)
     const [localGame, setGame] = useState()
 
@@ -66,9 +64,11 @@ function ClippedDrawer({library, token}) {
         console.log(game)
     }
 
-    function renderIsEdited(game){
+    function renderIsEdited(game) {
+        console.log('is edited')
         return (
-            <ModifyGameLibrary childToParent={childToParent} game={localGame} gameContent={gameContent} breakPointName={breakPointName} />
+            <ModifyGameLibrary childToParent={childToParent} game={localGame} gameContent={gameContent}
+                               breakPointName={breakPointName}/>
         )
 
     }
@@ -94,22 +94,22 @@ function ClippedDrawer({library, token}) {
                             }
                         </div>
                         <div className={styles['game-detail-subtitle']}>
-                            {game.playtime} h
+                            {localGame.playtime} h
                             <div>
-                                Bought at: {formatterCurrency.format(game.bought_at)}
+                                Bought at: {formatterCurrency.format(localGame.bought_at)}
                             </div>
                             {game.sold_at > 0 &&
-                                <div>
-                                    Sold at: {formatterCurrency.format(game.sold_at)}
-                                </div>
+                            <div>
+                                Sold at: {formatterCurrency.format(localGame.sold_at)}
+                            </div>
                             }
                             <div style={{display: "flex", gap: "0.25em"}}>
                                 <span>Status: </span>
                                 <Chip sx={{color: 'white', alignSelf: 'end', backgroundColor: '#424242'}}
-                                      size="small" variant="filled" label={game.status}/>
+                                      size="small" variant="filled" label={localGame.status}/>
                             </div>
                             <div>
-                                Platform: {game.platform}
+                                Platform: {localGame.platform}
                             </div>
                         </div>
                         {
@@ -130,8 +130,8 @@ function ClippedDrawer({library, token}) {
                                         <>
                                             genres:
                                             <ul>
-                                                {gameContent[0].genres.map((genre) => (
-                                                    <li>{genre.name}</li>))}
+                                                {gameContent[0].genres.map((genre, index) => (
+                                                    <li key={index}>{genre.name}</li>))}
                                             </ul>
                                         </>)
                                     : ''
@@ -166,7 +166,7 @@ function ClippedDrawer({library, token}) {
             setGameContent(gameContent)
             console.log('gc', gameContent)
         } else if (game.id_game === -1) {
-          fetchUserStats()
+            fetchUserStats()
         }
         setActive(game.id_game)
     }
@@ -226,45 +226,58 @@ function ClippedDrawer({library, token}) {
                     width: {sm: `calc(100% - ${drawerWidth}px)`}
                 }}
             >
-                <GenericCard className={styles[`generic-card-${breakPointName}`]} style={active === -1 ? {background: 'none'} : {}}>
-                        {active === -1 && userStats != null
-                            ? (
-                                <>
-                                        <h1>My stats</h1>
-                                    <div className={styles.cards}>
-                                        <GenericCard>
-                                            <h2>Average money spent on games</h2>
-                                            <span  style={{color: 'red', fontSize: 'large'}}>{formatterCurrency.format(userStats.avg_spent)}</span>
-                                        </GenericCard>
-                                        <GenericCard>
-                                            <h2>Average money gained on games</h2>
-                                            <span  style={{color: 'green', fontSize: 'large'}}>{formatterCurrency.format(userStats.avg_revenue)}</span>
-                                        </GenericCard>
-                                        <GenericCard>
-                                            <h2>Total of money gained</h2>
-                                            <span  style={{color: 'green', fontSize: 'large'}}>{formatterCurrency.format(userStats.total_revenue_player)}</span>
-                                        </GenericCard>
-                                        <GenericCard>
-                                            <h2>Total of money spent</h2>
-                                            <span  style={{color: 'red', fontSize: 'large'}}>{formatterCurrency.format(userStats.total_spent_player)}</span>
-                                        </GenericCard>
-                                        <GenericCard>
-                                            <h2>Most used status for games</h2>
-                                            <span style={{fontSize: 'large', fontStyle: 'italic'}}>
+                <GenericCard className={styles[`generic-card-${breakPointName}`]}
+                             style={active === -1 ? {background: 'none'} : {}}>
+                    {active === -1 && userStats != null
+                        ? (
+                            <>
+                                <h1>My stats</h1>
+                                <div className={styles.cards}>
+                                    <GenericCard>
+                                        <h2>Average money spent on games</h2>
+                                        <span style={{
+                                            color: 'red',
+                                            fontSize: 'large'
+                                        }}>{formatterCurrency.format(userStats.avg_spent)}</span>
+                                    </GenericCard>
+                                    <GenericCard>
+                                        <h2>Average money gained on games</h2>
+                                        <span style={{
+                                            color: 'green',
+                                            fontSize: 'large'
+                                        }}>{formatterCurrency.format(userStats.avg_revenue)}</span>
+                                    </GenericCard>
+                                    <GenericCard>
+                                        <h2>Total of money gained</h2>
+                                        <span style={{
+                                            color: 'green',
+                                            fontSize: 'large'
+                                        }}>{formatterCurrency.format(userStats.total_revenue_player)}</span>
+                                    </GenericCard>
+                                    <GenericCard>
+                                        <h2>Total of money spent</h2>
+                                        <span style={{
+                                            color: 'red',
+                                            fontSize: 'large'
+                                        }}>{formatterCurrency.format(userStats.total_spent_player)}</span>
+                                    </GenericCard>
+                                    <GenericCard>
+                                        <h2>Most used status for games</h2>
+                                        <span style={{fontSize: 'large', fontStyle: 'italic'}}>
                     {userStats.most_present_status}</span>
-                                        </GenericCard>
-                                        <GenericCard>
-                                            <h2>Number of games</h2>
-                                            <span style={{fontSize: 'large', fontStyle: 'italic'}}>
+                                    </GenericCard>
+                                    <GenericCard>
+                                        <h2>Number of games</h2>
+                                        <span style={{fontSize: 'large', fontStyle: 'italic'}}>
                     {userStats.total_game}</span>
-                                        </GenericCard>
-                                    </div>
-                                </>
-                            )
-                            : ''
-                        }
-                    {library.map((game) => (
-                        <div>
+                                    </GenericCard>
+                                </div>
+                            </>
+                        )
+                        : ''
+                    }
+                    {library.map((game, index) => (
+                        <div key={index}>
                             {active === game.id_game && <div>
                                 {
                                     isEdited
@@ -276,8 +289,8 @@ function ClippedDrawer({library, token}) {
                         </div>
                     ))}
                 </GenericCard>
-                {library.map((game) => (
-                    <>
+                {library.map((game, index) => (
+                    <div key={index}>
                         {active === game.id_game && game.igdb_id != null
                             ? <GenericCard>
                                 <div className={styles['forum-header']}>
@@ -303,8 +316,8 @@ function ClippedDrawer({library, token}) {
                                             ? <span>No posts found for this game yet.</span>
                                             : ''}
                                         {game.latestsPosts != null && game.latestsPosts.length > 0
-                                            ? game.latestsPosts.map((post) => (
-                                                <ul>
+                                            ? game.latestsPosts.map((post, index) => (
+                                                <ul key={index}>
                                                     <li>
                                                         Author: {post.author}, title: {post.title}. <Link
                                                         href={`/posts/see?id=${post.id}`}
@@ -317,11 +330,11 @@ function ClippedDrawer({library, token}) {
                             </GenericCard>
                             : ''
                         }
-                    </>
+                    </div>
                 ))}
 
-                {library.map((game) => (
-                    <div>
+                {library.map((game, index) => (
+                    <div key={index}>
                         {active === game.id_game && game.igdb_id != null ?
                             <GenericCard className={styles[`generic-card-${breakPointName}`]}>
                                 <div style={{width: 'max-content'}}>
@@ -331,12 +344,12 @@ function ClippedDrawer({library, token}) {
                             : ''}
                     </div>
                 ))}
-                {library.map((game) => (
-                    <div>
+                {library.map((game, index) => (
+                    <div key={index}>
                         {active === game.id_game && game.igdb_id != null ?
                             <GenericCard className={styles[`generic-card-${breakPointName}`]}>
                                 <div>
-                                    <UserReview gameId={game.id_game}/>
+                                    <UserReview gameId={game.id_game} igdbId={game.igdb_id}/>
                                 </div>
                             </GenericCard>
                             : ''
