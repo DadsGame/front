@@ -1,98 +1,101 @@
 .game-card {
-    width: min-content;
-    height: min-content;
-    position: relative;
+  width: min-content;
+  height: min-content;
+  position: relative;
 }
 
 .game-card-img {
-    display: block;
-    border-radius: 0.25em;
+  display: block;
+  border-radius: 0.25em;
 }
 
 .game-card:hover {
-    background-color: #000;
-    border-radius: 0.25em;
+  background-color: #000;
+  border-radius: 0.25em;
 }
 
 .game-card:hover .game-card-img {
-    transition: opacity 0.5s;
-    opacity: 0.5;
-    cursor: pointer;
+  transition: opacity 0.5s;
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 .game-card:hover .game-card-title {
-    visibility: visible;
+  visibility: visible;
 }
 
 .game-card:hover .game-card-score {
-    visibility: visible;
+  visibility: visible;
 }
 
-
 .game-card-title {
-    position: absolute;
-    top: 0;
-    margin: 0.25em;
-    color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-    visibility: hidden;
-    font-size: large;
+  position: absolute;
+  top: 0;
+  margin: 0.25em;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  visibility: hidden;
+  font-size: large;
 }
 
 .game-card-title-local {
-    position: absolute;
-    top: 0;
-    margin: 0.25em;
-    color: black;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: large;
+  position: absolute;
+  top: 0;
+  margin: 0.25em;
+  color: black;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: large;
 }
 
 .title {
-    position: absolute;
-    top: 0;
-    margin: 0.25em;
-    color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-    visibility: hidden;
-    font-size: large;
+  position: absolute;
+  top: 0;
+  margin: 0.25em;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  visibility: hidden;
+  font-size: large;
 }
 
 .game-card-score {
-    position: absolute;
-    top: 100%;
-    transform: translate(10%, -100%);
-    margin-top: -0.5em;
-    color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-    visibility: hidden;
-    font-size: xx-large;
-    background-color: #000;
-    border-radius: 0.25em;
-    padding: 0.1em;
+  position: absolute;
+  top: 100%;
+  transform: translate(10%, -100%);
+  margin-top: -0.5em;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  visibility: hidden;
+  font-size: xx-large;
+  background-color: #000;
+  border-radius: 0.25em;
+  padding: 0.1em;
 }
 
 .gold {
-    color: gold;
+  color: gold;
 }
 
 .silver {
-    color: silver;
+  color: silver;
 }
 
 .bronze {
-    color: #cd7f32;
+  color: #cd7f32;
 }
 
 .below {
-    color: #fff;
+  color: #fff;
 }
 
 @keyframes bottomToVisible {
-    from {top: 120%;}
-    to { top: 100%;}
+  from {
+    top: 120%;
+  }
+  to {
+    top: 100%;
+  }
 }
