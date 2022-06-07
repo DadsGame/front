@@ -8,8 +8,5 @@ jobs:
   prettier-check:
     runs-on: ubuntu-latest
     steps:
-      - name: actionsx/prettier
-        uses: actionsx/prettier@v2
-        with:
-          # Prettier CLI arguments
-          args: --config  .prettierrc.json --check ./*
+    - name: Prettier Check
+      uses: rutajdash/prettier-cli-action@v1.0.0
