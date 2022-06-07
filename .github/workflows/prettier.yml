@@ -7,12 +7,9 @@ on:
 jobs:
   prettier-check:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
     steps:
       - name: actionsx/prettier
         uses: actionsx/prettier@v2
         with:
           # Prettier CLI arguments
-          args: --config  .eslintrc.json --check .
+          args: --config  .prettierrc.json --check .
