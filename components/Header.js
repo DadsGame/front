@@ -154,6 +154,9 @@ const Header = ({ cookies }) => {
           >
             {token == null || token === '' ? (
               <div>
+                <MenuItem onClick={() => router.push('/stats')}>
+                  Global Stats
+                </MenuItem>
                 <MenuItem onClick={() => router.push('/login')}>
                   <Login fontSize="small" />
                   Login
