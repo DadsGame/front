@@ -39,7 +39,6 @@ const AddGameForm = ({
       return setGameNameError('This input is required.');
     }
     setGameNameError('');
-    'game name on submit', gameName, data.name === '';
     if (hasSoldGame === 'false' && data?.soldAt != null)
       setFormData({
         boughtAt: data.boughtAt,

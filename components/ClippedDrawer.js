@@ -47,14 +47,12 @@ function ClippedDrawer({ library, token }) {
     });
     const stats = await res.json();
     setUserStats(stats[0]);
-    'stats', stats;
   }
 
   const [isEdited, setEdit] = useState(false);
   const [localGame, setGame] = useState();
 
   const childToParent = (childDataEdit, gameChanged) => {
-    'gc', gameChanged;
     setEdit(childDataEdit);
     setGame(gameChanged);
   };
@@ -69,11 +67,9 @@ function ClippedDrawer({ library, token }) {
 
   function onEdit(game) {
     setEdit(true);
-    game;
   }
 
   function renderIsEdited(game) {
-    ('is edited');
     return (
       <ModifyGameLibrary
         childToParent={childToParent}
@@ -186,7 +182,7 @@ function ClippedDrawer({ library, token }) {
 
   async function setContainerData(game) {
     setGame(game);
-    game;
+
     if (game.id_game !== -1 && game.igdb_id != null) {
       const url = new URL(
         '/api/igdb/games/byId',
@@ -196,7 +192,6 @@ function ClippedDrawer({ library, token }) {
       const res = await fetch(url.toString());
       const gameContent = await res.json();
       setGameContent(gameContent);
-      'gc', gameContent;
     } else if (game.id_game === -1) {
       fetchUserStats();
     }
