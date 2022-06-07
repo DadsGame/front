@@ -22,7 +22,7 @@ const ForumForm = ({ setFormData, isPost }) => {
     formState: { errors },
   } = useForm({ criteriaMode: 'all' });
   const onSubmit = (data) => {
-    console.log(data);
+    data;
     setFormData(data);
   };
 

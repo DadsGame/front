@@ -25,7 +25,7 @@ const checkIfGameAlreadyExistsLocal = async (gameName, token) => {
     process.env.NEXT_PUBLIC_MAIN_API_URL
   );
   gameUrl.searchParams.set('name', gameName);
-  console.log(gameUrl);
+  gameUrl;
   const res = await fetch(gameUrl.toString(), {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -40,7 +40,7 @@ const checkIfGameAlreadyExists = async (igdbId, token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
   const json = await res.json();
-  console.log('jsonexists', json);
+  'jsonexists', json;
   return { alreadyExists: Object.values(json).length !== 0, id: json.id };
 };
 
@@ -110,7 +110,7 @@ const postGameToLibrary = async (formData, gameId, token) => {
   );
   const alreadyExists = await checkIfGameAlreadyExists(gameId, token);
   const alreadyExistBool = alreadyExists.alreadyExists;
-  console.log('exists', alreadyExists, gameId, formData);
+  'exists', alreadyExists, gameId, formData;
   let game = {};
   if (!alreadyExistBool) {
     game = await addGameToApi({ ...formData, igdbId: gameId }, token);
@@ -142,7 +142,7 @@ const AddGame = ({ cookies }) => {
   const [gameId, setGameId] = useState('');
   const [fromSearch, setFromSearch] = useState(false);
   const routerQuery = router.query;
-  console.log(gameName);
+  gameName;
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');
   const handleClick = () => {
@@ -176,10 +176,10 @@ const AddGame = ({ cookies }) => {
 
   useEffect(() => {
     if (Object.values(formData).length === 0) return;
-    console.log('data', formData, gameId);
+    'data', formData, gameId;
     const addGame = async () => {
       const shouldBeLocal = await checkGameShouldBeLocal(formData.name, gameId);
-      console.log(shouldBeLocal);
+      shouldBeLocal;
       const { error } = shouldBeLocal
         ? await postGamelocalToLibrary(formData, token)
         : await postGameToLibrary(formData, gameId, token);

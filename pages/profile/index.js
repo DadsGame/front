@@ -33,7 +33,7 @@ const Profile = ({ cookies }) => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const profileJson = await res.json();
-      console.log('p', profileJson);
+      'p', profileJson;
 
       const postsUrl = new URL(
         `/posts/byAuthor/${profileJson.username}`,

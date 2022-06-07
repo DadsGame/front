@@ -25,7 +25,7 @@ const Search = ({ cookies }) => {
       const searchCardGames = allGames.map((game) => {
         if (game.name == null || game.summary == null || game.cover == null)
           return;
-        console.log(game);
+        game;
         return (
           <SearchCard
             game={{

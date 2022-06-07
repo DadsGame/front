@@ -29,7 +29,7 @@ const AddCommentForm = ({ gameId, setFormData, userId, cookies }) => {
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log('send data ', { comment }, { value });
+      'send data ', { comment }, { value };
       const commentUrl = new URL(
         '/games/addReview',
         process.env.NEXT_PUBLIC_MAIN_API_URL
@@ -54,14 +54,14 @@ const AddCommentForm = ({ gameId, setFormData, userId, cookies }) => {
         .then((res) => {
           setOpen(true);
           if (res == null || Object.values(res).length === 0) {
-            console.log('error ');
+            ('error ');
             setError('invalid review');
           } else {
             setError('');
           }
         });
     } catch (err) {
-      console.log(err);
+      err;
     }
     await router.push('/');
   };

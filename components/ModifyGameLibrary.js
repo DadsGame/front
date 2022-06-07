@@ -65,7 +65,7 @@ const ModifyGameLibrary = ({
     setOpen(true);
 
     if (!res.ok) {
-      console.log('not ok', res);
+      'not ok', res;
       setError('Edit failed');
       return;
     }

@@ -49,7 +49,7 @@ export default function Login() {
         })
         .then((res) => {
           if (res == null || Object.values(res).length === 0) {
-            console.log('not ok');
+            ('not ok');
             setError('username or password invalid.');
           } else {
             setError('');

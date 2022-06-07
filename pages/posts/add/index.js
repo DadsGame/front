@@ -11,7 +11,7 @@ const checkIfGameTopicExists = async (gameTopicId) => {
   );
   const res = await fetch(gameTopicUrl.toString());
   const json = await res.json();
-  console.log(json);
+  json;
   return json != null;
 };
 
@@ -71,7 +71,7 @@ const AddPost = ({ cookies }) => {
     const addPost = async () => {
       if (Object.values(formData).length === 0) return;
       const gameTopicExists = await checkIfGameTopicExists(router.query.gid);
-      console.log('gexist', gameTopicExists);
+      'gexist', gameTopicExists;
       if (!gameTopicExists) {
         await addGameTopic(router.query.gid, token);
       }

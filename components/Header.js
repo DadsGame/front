@@ -317,7 +317,7 @@ const Header = ({ cookies }) => {
           </MenuItem>
           <MenuItem
             onClick={() => {
-              console.log('library');
+              ('library');
               return router.push('/library');
             }}
           >
