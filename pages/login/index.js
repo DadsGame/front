@@ -49,7 +49,6 @@ export default function Login() {
         })
         .then((res) => {
           if (res == null || Object.values(res).length === 0) {
-            ('not ok');
             setError('username or password invalid.');
           } else {
             setError('');
@@ -94,7 +93,6 @@ export default function Login() {
           </Alert>
         )}
       </Snackbar>
-      {JSON.stringify(formData)}
       <AuthForm setFormData={setData} />
     </>
   );

@@ -103,7 +103,6 @@ const GameCard = ({
   }
 
   function _renderBig() {
-    'img', JSON.stringify(CoverNotFound);
     return (
       <div>
         <div className={styles['game-card']}>

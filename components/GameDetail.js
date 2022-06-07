@@ -48,7 +48,6 @@ const GameDetail = ({ game, latestsPosts, cookies }) => {
       const alreadyExists = await checkIfGameAlreadyExists(game.id, myToken);
       const alreadyExistBool = alreadyExists.alreadyExists;
       if (alreadyExistBool) {
-        'connecte', myToken, game;
         const url = new URL(
           `games/${game.id}/isWished`,
           process.env.NEXT_PUBLIC_MAIN_API_URL
@@ -58,14 +57,12 @@ const GameDetail = ({ game, latestsPosts, cookies }) => {
           method: 'GET',
         });
         const wished = await r.json();
-        'wished: ', wished;
+
         setWished(wished);
       } else {
-        ('game does not exist');
         setWished(false);
       }
     } else {
-      'non connecte', myToken;
     }
   }
   const formatter = new Intl.NumberFormat('en-US', {
@@ -94,7 +91,7 @@ const GameDetail = ({ game, latestsPosts, cookies }) => {
 
     const alreadyExists = await checkIfGameAlreadyExists(id, token);
     const alreadyExistBool = alreadyExists.alreadyExists;
-    token;
+
     if (!alreadyExistBool) {
       await addGameToApi({ name: game.name, igdbId: game.id }, token);
     }

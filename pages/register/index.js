@@ -70,7 +70,6 @@ export default function Register() {
           </Alert>
         )}
       </Snackbar>
-      {JSON.stringify(formData)}
       <AuthForm isRegistration={true} setFormData={setData} />
     </>
   );
