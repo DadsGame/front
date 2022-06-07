@@ -165,6 +165,9 @@ const Header = ({ cookies }) => {
               </div>
             ) : (
               <div>
+                <MenuItem onClick={() => router.push('/stats')}>
+                  Global Stats
+                </MenuItem>
                 <MenuItem onClick={() => router.push('/profile')}>
                   Profile
                 </MenuItem>
