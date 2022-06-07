@@ -79,6 +79,12 @@ const GameCard = ({
             )}
           </div>
         </div>
+        <div
+          style={{ width }}
+          className={styles[`game-card-title${!isIgdb ? '-local' : ''}`]}
+        >
+          {title}
+        </div>
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           {error !== '' ? (
             <Alert
@@ -89,13 +95,7 @@ const GameCard = ({
               {error}
             </Alert>
           ) : (
-            <Alert
-              onClose={handleClose}
-              severity="success"
-              sx={{ width: '100%' }}
-            >
-              Review successfully added
-            </Alert>
+            <div></div>
           )}
         </Snackbar>
       </div>
