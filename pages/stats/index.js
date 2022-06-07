@@ -15,25 +15,42 @@ const Stats = ({ stats }) => {
         <GenericCard>
           <h2>Average money spent on games by players</h2>
           <span style={{ color: 'red', fontSize: 'large' }}>
-            {currencyFormatter.format(stat.avg_spent)}
+            {
+              !!stat.avg_spent
+                  ? <div>{currencyFormatter.format(stat.avg_spent)} </div>
+                  : <div>No data</div>
+            }
+
           </span>
         </GenericCard>
         <GenericCard>
           <h2>Average money gained on games by players</h2>
           <span style={{ color: 'green', fontSize: 'large' }}>
-            {currencyFormatter.format(stat.avg_revenue)}
+            {
+              !!stat.avg_revenue
+                ? <div>{currencyFormatter.format(stat.avg_revenue)}</div>
+              : <div>No data</div>
+            }
           </span>
         </GenericCard>
         <GenericCard>
           <h2>Total of money spent by players</h2>
           <span style={{ color: 'red', fontSize: 'large' }}>
-            {currencyFormatter.format(stat.total_spent_players)}
+            {
+              !!stat.total_spent_players
+                  ? <div>{currencyFormatter.format(stat.total_spent_players)}</div>
+                  : <div>No data</div>
+            }
           </span>
         </GenericCard>
         <GenericCard>
           <h2>Total of money gained by players</h2>
           <span style={{ color: 'green', fontSize: 'large' }}>
-            {currencyFormatter.format(stat.total_revenue_players)}
+            {
+              !!stat.total_revenue_players
+                  ? <div>{currencyFormatter.format(stat.total_revenue_players)}</div>
+                  : <div>No data</div>
+            }
           </span>
         </GenericCard>
         <GenericCard>
@@ -41,14 +58,22 @@ const Stats = ({ stats }) => {
           <div className={styles.winner}>
             <EmojiEventsIcon />
             <span style={{ color: 'gold', fontSize: 'large' }}>
-              {stat.user_with_max_games}
+              {
+                !!stat.user_with_max_games
+                    ? <div>{currencyFormatter.format(stat.user_with_max_games)}</div>
+                    : <div>No data</div>
+              }
             </span>
           </div>
         </GenericCard>
         <GenericCard>
           <h2>Most used status for games</h2>
           <span style={{ fontSize: 'large', fontStyle: 'italic' }}>
-            {stat.most_present_status}
+            {
+              !!stat.most_present_status
+                  ? <div>{currencyFormatter.format(stat.most_present_status)}</div>
+                  : <div>No data</div>
+            }
           </span>
         </GenericCard>
       </div>
