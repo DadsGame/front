@@ -60,7 +60,7 @@ const Stats = ({ stats }) => {
             <span style={{ color: 'gold', fontSize: 'large' }}>
               {
                 !!stat.user_with_max_games
-                    ? <div>{currencyFormatter.format(stat.user_with_max_games)}</div>
+                    ? <div>{(stat.user_with_max_games)}</div>
                     : <div>No data</div>
               }
             </span>
@@ -71,7 +71,7 @@ const Stats = ({ stats }) => {
           <span style={{ fontSize: 'large', fontStyle: 'italic' }}>
             {
               !!stat.most_present_status
-                  ? <div>{currencyFormatter.format(stat.most_present_status)}</div>
+                  ? <div>{(stat.most_present_status)}</div>
                   : <div>No data</div>
             }
           </span>

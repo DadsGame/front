@@ -114,7 +114,7 @@ function ClippedDrawer({ library, token }) {
                 <div>
                   Bought at: {formatterCurrency.format(localGame.bought_at)}
                 </div>
-                {game.sold_at > 0 && (
+                {localGame.sold_at > 0 && (
                   <div>
                     Sold at: {formatterCurrency.format(localGame.sold_at)}
                   </div>
@@ -132,7 +132,7 @@ function ClippedDrawer({ library, token }) {
                     label={localGame.status}
                   />
                 </div>
-                <div>Platform: {localGame.platform}</div>
+                <div>Platform: {game.platform}</div>
               </div>
               {game.igdb_id != null ? (
                 <div className={styles['game-detail-score']}>
