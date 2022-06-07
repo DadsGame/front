@@ -93,13 +93,17 @@ const ModifyGameLibrary = ({
       <form onSubmit={handleSubmit}>
         <div className={styles[`details-container-${breakPointName}`]}>
           <div className={styles[`details-image-container`]}>
-            <img
-              className={styles['game-detail-img']}
-              src={gameContent[0].cover}
-            />
+            {gameContent?.[0]?.cover != null ? (
+              <img
+                className={styles['game-detail-img']}
+                src={gameContent?.[0].cover}
+              />
+            ) : (
+              ''
+            )}
           </div>
           <div className={styles['game-detail-title']}>
-            {JSON.stringify(gameContent[0].name).replaceAll('"', '')}
+            {gameContent?.[0]?.name ?? game.name}
           </div>
           <div className={styles['game-detail-subtitle']}>
             <div>
