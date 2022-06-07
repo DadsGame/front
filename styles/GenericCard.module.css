@@ -1,0 +1,11 @@
+.container {
+  background: linear-gradient(
+    to right top,
+    #071931 0%,
+    #33274f 50%,
+    #661e43 100%
+  );
+  padding: 2em;
+  border-radius: 20px;
+  margin-bottom: 1em;
+}

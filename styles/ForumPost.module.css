@@ -1,0 +1,32 @@
+.post,
+.comment {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+  color: black;
+}
+
+.post-title {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.post-author,
+.comment-author {
+  font-size: large;
+}
+
+.comment-author {
+  font-style: italic;
+}
+
+.post-content {
+  margin: 1em 0 1em 0;
+}

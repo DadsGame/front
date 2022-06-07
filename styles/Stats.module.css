@@ -1,0 +1,11 @@
+.cards {
+  gap: 2em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.winner {
+  display: flex;
+  gap: 0.5em;
+}

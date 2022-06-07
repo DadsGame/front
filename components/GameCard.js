@@ -1,106 +1,167 @@
-import {React, useState} from "react";
+import { React, useState } from 'react';
 
 import styles from '../styles/GameCard.module.css';
-import {Backdrop, Box, Modal, Typography} from "@mui/material";
-import useBreakpoint from "../hooks/useBreakpoint.js";
-import {useRouter} from "next/router";
+import useBreakpoint from '../hooks/useBreakpoint.js';
+import { useRouter } from 'next/router';
+import CoverNotFound from '../public/images/cover_not_found_2.png';
+import { Alert, Snackbar } from '@mui/material';
+import Image from 'next';
 
-const GameCard = ({cover, score, title, scoreColor = '#fff', id}) => {
+const GameCard = ({
+  cover,
+  score,
+  title,
+  scoreColor = '#fff',
+  id,
+  isIgdb,
+  igdb_id,
+}) => {
+  const { breakPointName, width, height } = useBreakpoint();
+  const router = useRouter();
+  const idGame = id;
+  const skeleton = cover == null || score == null || id == null;
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState('');
+  const handleClick = () => {
+    setOpen(true);
+  };
 
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const {breakPointName, width, height} = useBreakpoint();
-    const router = useRouter();
-    const idGame = id;
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
-    // TODO: Put the formatter in i18n lib when dealing with translation
-    const formatter = new Intl.NumberFormat('fr-FR', {style: 'percent',
-        maximumFractionDigits: 0});
+    setOpen(false);
+  };
 
-    return breakPointName === 'large' ? _renderBig() : _renderSmall();
+  // TODO: Put the formatter in i18n lib when dealing with translation
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    maximumFractionDigits: 0,
+  });
 
-    function _renderSmall() {
-        return (
-            <div className={styles['game-card']}>
-            <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']} onClick={() => router.push({pathname: '/details', query: {gid: idGame}})} />
-            {/*<div className="modal">
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={{
-                        position: 'absolute',
-                        top: '100%',
-                        left: '0',
-                        transform: 'translateY(-100%)',
-                        width: 400,
-                        bgcolor: 'background.paper',
-                        border: '2px solid #000',
-                        boxShadow: 24,
-                        p: 4,
-                        color: 'black',
-                        animation: `${styles.bottomToVisible} 0.3s`,
-                    }}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                            {title}
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            {score}
-                        </Typography>
-                    </Box>
-                </Modal>
-            </div>
-            */}
+  function goToDetails() {
+    if (isIgdb) {
+      if (igdb_id != null) {
+        return router.push({ pathname: '/details', query: { gid: igdb_id } });
+      } else {
+        return router.push({ pathname: '/details', query: { gid: idGame } });
+      }
+    }
+    setOpen(true);
+    setError('No Detail page');
+  }
+
+  return breakPointName === 'large' ? _renderBig() : _renderSmall();
+
+  function _renderSmall() {
+    return (
+      <div>
+        <div className={styles['game-card']}>
+          <div className="img-container">
+            {isIgdb ? (
+              <img
+                src={cover}
+                alt=""
+                style={{ width, height }}
+                className={styles['game-card-img']}
+                onClick={() => goToDetails()}
+              />
+            ) : (
+              <img
+                src={CoverNotFound.src}
+                alt=""
+                width={width}
+                height={height}
+                className={styles['game-card-img']}
+                onClick={() => goToDetails()}
+              />
+            )}
+          </div>
         </div>
-        );
-    }
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          {error !== '' ? (
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: '100%' }}
+            >
+              {error}
+            </Alert>
+          ) : (
+            <Alert
+              onClose={handleClose}
+              severity="success"
+              sx={{ width: '100%' }}
+            >
+              Review successfully added
+            </Alert>
+          )}
+        </Snackbar>
+      </div>
+    );
+  }
 
-    function _renderBig() {
-        return(
-            <div className={styles['game-card']}>
-                <img src={cover} alt="" style={{width, height}} className={styles['game-card-img']} onClick={() => router.push({pathname: '/details', query: {gid: idGame}})} />
-                <div style={{width}} className={styles['game-card-title']}>{title}</div>
-                <div style={{color: scoreColor}} className={`${styles['game-card-score']}`}>
+  function _renderBig() {
+    'img', JSON.stringify(CoverNotFound);
+    return (
+      <div>
+        <div className={styles['game-card']}>
+          <div className="img-container">
+            {isIgdb ? (
+              <div>
+                <img
+                  src={cover}
+                  alt=""
+                  style={{ width, height }}
+                  className={styles['game-card-img']}
+                  onClick={() => goToDetails()}
+                />
+                {!!score ? (
+                  <div
+                    style={{ color: scoreColor }}
+                    className={`${styles['game-card-score']}`}
+                  >
                     {formatter.format(Math.ceil(score) / 100)}
-                </div>
-                {/*
-                <div className="modal">
-                    <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <Box sx={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            width: 400,
-                            bgcolor: 'background.paper',
-                            border: '2px solid #000',
-                            boxShadow: 24,
-                            p: 4,
-                            color: 'black',
-                            animation: breakPointName === 'sml' ? `${styles.bottomToVisible} 0.3s` : '',
-                        }}>
-                            <Typography id="modal-modal-title" variant="h6" component="h2">
-                                Card Modal
-                            </Typography>
-                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            </Typography>
-                        </Box>
-                    </Modal>
-                </div>
-                */}
-            </div>
-        )
-    }
-
-
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+            ) : (
+              <img
+                src={CoverNotFound.src}
+                alt=""
+                width={width}
+                height={height}
+                className={styles['game-card-img']}
+                onClick={() => goToDetails()}
+              />
+            )}
+          </div>
+          <div
+            style={{ width }}
+            className={styles[`game-card-title${!isIgdb ? '-local' : ''}`]}
+          >
+            {title}
+          </div>
+        </div>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          {error !== '' ? (
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: '100%' }}
+            >
+              {error}
+            </Alert>
+          ) : (
+            <div></div>
+          )}
+        </Snackbar>
+      </div>
+    );
+  }
 };
 
 export default GameCard;

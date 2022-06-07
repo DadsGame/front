@@ -1,0 +1,166 @@
+.cards {
+  display: flex;
+  gap: 0.5em;
+  flex-direction: column;
+}
+
+.details-container-large {
+  display: grid;
+  grid-template-columns: max-content max-content 1fr;
+  grid-template-rows: max-content max-content max-content;
+  gap: 1em;
+}
+
+.details-container-sml {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-container-lib-large {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: max-content max-content max-content;
+  gap: 1em;
+}
+
+.details-container-lib-sml {
+  display: flex;
+  flex-direction: column;
+}
+.details-container-lib-large-form {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-template-rows: repeat(4, max-content);
+  gap: 1em;
+}
+
+.details-container-lib-sml-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-detail-img {
+  border-radius: 0.25em;
+}
+
+.details-image-container {
+  grid-row: 1/4;
+}
+.details-image-lib-container {
+  grid-row: 1/5;
+}
+
+.game-detail-score {
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: x-large;
+  font-style: italic;
+}
+.game-detail-genre {
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: x-large;
+  font-style: italic;
+}
+
+.game-detail-title {
+  font-size: 2em;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.game-detail-subtitle {
+  font-size: 1.5em;
+  grid-column: 2;
+}
+
+.game-detail-summary {
+  margin-top: 1em;
+  font-weight: bold;
+}
+
+.game-detail-storyline {
+  margin-top: 1em;
+}
+
+.forum-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.forum-header-title {
+  align-self: center;
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.forum-header-btns {
+  display: flex;
+  width: max-content;
+  margin-left: 0.25em;
+  gap: 0.5em;
+}
+
+.forum-latest-post-title {
+  font-size: large;
+  margin: 1em 0 1em 0;
+  text-decoration: underline;
+}
+
+.clipped-text {
+  color: white;
+}
+
+.generic-card-sml {
+  width: 80vw;
+}
+
+.game-detail-add-lib {
+  grid-column: 3;
+  grid-row: 1/4;
+  justify-self: end;
+  display: flex;
+  width: max-content;
+  height: min-content;
+  gap: 0.5em;
+}
+
+.select {
+  color: white;
+  margin: 1em 0 1em 0;
+}
+
+.input {
+  backdrop-filter: blur(15px);
+  margin: 1em 0 1em 0.5em;
+}
+
+.editButtons {
+  background-color: #1976d2;
+  color: white;
+  border-style: hidden;
+  font-size: 0.75em;
+  padding: 0.5em;
+  border-radius: 10px;
+  transition-duration: 0.4s;
+}
+
+.editButtonsContainer {
+  display: flex;
+  gap: 0.25em;
+}
+
+.editButtons:hover:enabled {
+  cursor: pointer;
+  background-color: white;
+  color: #2e3033;
+}
+
+.editButtons:disabled {
+  background-color: #2e3033;
+}
+
+.editButtons:disabled:hover {
+}

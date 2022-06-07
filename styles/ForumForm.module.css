@@ -1,0 +1,24 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  gap: 1rem;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.container {
+  position: relative;
+  display: block;
+  height: 25em;
+}
+
+.form-title {
+  color: black;
+}
